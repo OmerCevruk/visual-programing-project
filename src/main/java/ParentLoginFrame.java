@@ -14,6 +14,7 @@ public class ParentLoginFrame extends javax.swing.JFrame {
      */
     public ParentLoginFrame() {
         initComponents();
+
     }
 
     /**

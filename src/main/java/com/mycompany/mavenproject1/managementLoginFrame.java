@@ -1,8 +1,13 @@
+package com.mycompany.mavenproject1;
+
+
+import javax.swing.SwingUtilities;
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author funghu
@@ -14,6 +19,15 @@ public class managementLoginFrame extends javax.swing.JFrame {
      */
     public managementLoginFrame() {
         initComponents();
+    }
+
+    private void applyStyles() {
+        // Load CSS
+        StyleSheet styleSheet = new StyleSheet();
+        styleSheet.importStyleSheet(getClass().getResource("/styles.css"));
+
+        // Apply CSS to components
+        SwingUtilities.updateComponentTreeUI(this);
     }
 
     /**
@@ -51,7 +65,6 @@ public class managementLoginFrame extends javax.swing.JFrame {
         });
 
         Password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Password.setText("jPasswordField1");
         Password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PasswordActionPerformed(evt);
