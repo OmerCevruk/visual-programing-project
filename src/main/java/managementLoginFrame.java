@@ -115,7 +115,7 @@ public class managementLoginFrame extends javax.swing.JFrame {
     private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PasswordActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
