@@ -1,21 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.mavenproject1;
 
-/**
- *
- * @author funghu
- */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCPostgreSQLConnection {
-    private final String url = "jdbc:postgresql://localhost/VisualDB";
-    private final String user = "postgres";
-    private final String password = "root";
+    private final String url = "jdbc:postgresql://localhost/VisualDB"; //name of your database name
+    private final String user = "postgres"; // user name of your postgre (default is postgres if havent changed)
+    private final String password = "1234"; // password of your postgre
 
     /**
      * Connect to the PostgreSQL database

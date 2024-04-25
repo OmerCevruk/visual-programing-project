@@ -1,9 +1,22 @@
+<<<<<<< Updated upstream
 managementLoginFrame$4.class
 ParentLoginFrame$3.class
 ParentLoginFrame$4.class
 ParentLoginFrame$2.class
 managementLoginFrame$2.class
 com/mycompany/mavenproject1/Mavenproject1.class
+=======
+ManagementLoginFrame$4.class
+ParentLoginFrame$3.class
+ManagementLoginFrame$1.class
+ParentLoginFrame$4.class
+ParentLoginFrame$2.class
+ManagementLoginFrame.class
+ManagementLoginFrame$3.class
+com/mycompany/mavenproject1/Mavenproject1.class
+ManagementLoginFrame$2.class
+com/mycompany/mavenproject1/JDBCPostgreSQLConnection.class
+>>>>>>> Stashed changes
 ParentLoginFrame.class
 managementLoginFrame$1.class
 managementLoginFrame.class

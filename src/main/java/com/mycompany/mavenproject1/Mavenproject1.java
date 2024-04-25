@@ -1,19 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.mavenproject1;
 import java.sql.Connection;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
-import com.managementLoginFrame;
+//import com.managementLoginFrame;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-/**
- *
- * @author funghu
- */
+
+
 public class Mavenproject1 {
     
     public static void main(String[] args) {
@@ -35,7 +29,7 @@ public class Mavenproject1 {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Create and display the GUI
-                new managementLoginFrame().setVisible(true);
+              //  new managementLoginFrame().setVisible(true);
             }
         });
 
