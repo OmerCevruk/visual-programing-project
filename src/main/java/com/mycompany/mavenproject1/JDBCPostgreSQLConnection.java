@@ -10,11 +10,7 @@ public class JDBCPostgreSQLConnection {
     private final String user = "postgres"; // user name of your postgre (default is postgres if havent changed)
     private final String password = "1234"; // password of your postgre
 
-    /**
-     * Connect to the PostgreSQL database
-     *
-     * @return a Connection object
-     */
+    
     public Connection connect() {
         Connection conn = null;
         try {
@@ -33,11 +29,5 @@ public class JDBCPostgreSQLConnection {
         return conn;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-  /*  public static void main(String[] args) {
-        JDBCPostgreSQLConnection app = new JDBCPostgreSQLConnection();
-        app.connect();
-    }*/
+   
 }

@@ -30,7 +30,7 @@ private final JDBCPostgreSQLConnection connect;
 
         ManagementLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ManagementLogin.setText("Management Login");
-        getContentPane().add(ManagementLogin, java.awt.BorderLayout.NORTH);
+        getContentPane().add(ManagementLogin, java.awt.BorderLayout.PAGE_START);
 
         FullNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         FullNameLabel.setText("Full Name");
@@ -90,7 +90,7 @@ private final JDBCPostgreSQLConnection connect;
                 .addGap(39, 39, 39))
         );
 
-        getContentPane().add(LoginContainer, java.awt.BorderLayout.CENTER);
+        getContentPane().add(LoginContainer, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
