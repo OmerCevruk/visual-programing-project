@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 
 public class ManagementLoginFrame extends javax.swing.JFrame {
 
@@ -104,13 +105,20 @@ private final JDBCPostgreSQLConnection connect;
         String passwordValue = new String(Password.getPassword());
 
         try (Connection conn = connect.connect()) {
-            String sql = "INSERT INTO public.management(\"FullName\", \"Password\") VALUES (?, ?)";
+            
+            String sql = "SELECT * FROM public.manager WHERE \"FullName\" = ? AND \"Password\" = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, fullNameValue);
             pstmt.setString(2, passwordValue);
-            pstmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(this, "Successfully logged in");
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()){
+                JOptionPane.showMessageDialog(this, "Successfully logged in");
+            }else{
+                // Login failed
+                JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

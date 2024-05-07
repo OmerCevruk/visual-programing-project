@@ -1,6 +1,7 @@
 import com.mycompany.mavenproject1.JDBCPostgreSQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane; 
 
@@ -22,7 +23,7 @@ public class ParentLoginFrame extends javax.swing.JFrame {
         ParentLoginLabel = new javax.swing.JLabel();
         FullNameLabel = new javax.swing.JLabel();
         PasswordLabel = new javax.swing.JLabel();
-        Password1 = new javax.swing.JPasswordField();
+        Password = new javax.swing.JPasswordField();
         FullName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,10 +48,10 @@ public class ParentLoginFrame extends javax.swing.JFrame {
         PasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PasswordLabel.setText("Password");
 
-        Password1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Password1.addActionListener(new java.awt.event.ActionListener() {
+        Password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Password1ActionPerformed(evt);
+                PasswordActionPerformed(evt);
             }
         });
 
@@ -84,7 +85,7 @@ public class ParentLoginFrame extends javax.swing.JFrame {
                 .addGap(147, 147, 147))
             .addGroup(layout.createSequentialGroup()
                 .addGap(141, 141, 141)
-                .addComponent(Password1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -99,7 +100,7 @@ public class ParentLoginFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PasswordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Password1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122)
                 .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(78, Short.MAX_VALUE))
@@ -109,25 +110,32 @@ public class ParentLoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-       String fullNameValue = FullName.getText();
-        String passwordValue = new String(Password1.getPassword());
+        String fullNameValue = FullName.getText();
+        String passwordValue = new String(Password.getPassword());
 
         try (Connection conn = connect.connect()) {
-            String sql = "INSERT INTO public.parent(\"FullName\", \"Password\") VALUES (?, ?)";
+            
+            String sql = "SELECT * FROM public.parent WHERE \"FullName\" = ? AND \"Password\" = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, fullNameValue);
             pstmt.setString(2, passwordValue);
-            pstmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(this, "Successfully logged in");
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()){
+                JOptionPane.showMessageDialog(this, "Successfully logged in");
+            }else{
+                // Login failed
+                JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_LoginActionPerformed
 
-    private void Password1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Password1ActionPerformed
+    private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Password1ActionPerformed
+    }//GEN-LAST:event_PasswordActionPerformed
 
     private void FullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullNameActionPerformed
         // TODO add your handling code here:
@@ -167,7 +175,7 @@ public class ParentLoginFrame extends javax.swing.JFrame {
     private javax.swing.JButton Login;
     private javax.swing.JScrollPane LoginButton;
     private javax.swing.JLabel ParentLoginLabel;
-    private javax.swing.JPasswordField Password1;
+    private javax.swing.JPasswordField Password;
     private javax.swing.JLabel PasswordLabel;
     // End of variables declaration//GEN-END:variables
 }
