@@ -29,6 +29,8 @@ private final JDBCPostgreSQLConnection connect;
         PasswordLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setFocusableWindowState(false);
+        setUndecorated(true);
         getContentPane().setLayout(new java.awt.BorderLayout(0, 10));
 
         ManagementLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -67,20 +69,20 @@ private final JDBCPostgreSQLConnection connect;
         LoginContainer.setLayout(LoginContainerLayout);
         LoginContainerLayout.setHorizontalGroup(
             LoginContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginContainerLayout.createSequentialGroup()
-                .addGap(184, 184, 184)
+            .addGroup(LoginContainerLayout.createSequentialGroup()
+                .addGap(183, 183, 183)
                 .addGroup(LoginContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FullName)
                     .addComponent(FullNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Password, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                     .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(184, 184, 184))
+                .addGap(185, 185, 185))
         );
         LoginContainerLayout.setVerticalGroup(
             LoginContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginContainerLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginContainerLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(FullNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(FullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -90,7 +92,7 @@ private final JDBCPostgreSQLConnection connect;
                 .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(Login)
-                .addGap(39, 39, 39))
+                .addGap(16, 16, 16))
         );
 
         getContentPane().add(LoginContainer, java.awt.BorderLayout.PAGE_END);
