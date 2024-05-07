@@ -1,11 +1,10 @@
 package com.mycompany.mavenproject1;
+import com.mycompany.mavenproject1.ManagementLoginFrame;
+
 import java.sql.Connection;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 //import com.managementLoginFrame;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 
 public class Mavenproject1 {
@@ -29,7 +28,7 @@ public class Mavenproject1 {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Create and display the GUI
-              //  new managementLoginFrame().setVisible(true);
+            new ManagementLoginFrame().setVisible(true);
             }
         });
 

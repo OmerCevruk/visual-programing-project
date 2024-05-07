@@ -1,3 +1,5 @@
+package com.mycompany.mavenproject1;
+
 import com.mycompany.mavenproject1.JDBCPostgreSQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
