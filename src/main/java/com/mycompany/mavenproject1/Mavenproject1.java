@@ -4,7 +4,6 @@ import com.mycompany.mavenproject1.ManagementLoginFrame;
 import java.sql.Connection;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
-//import com.managementLoginFrame;
 
 
 public class Mavenproject1 {
@@ -28,7 +27,8 @@ public class Mavenproject1 {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Create and display the GUI
-            new ManagementLoginFrame().setVisible(true);
+                
+                new ManagementRegisterFrame().setVisible(true);
             }
         });
 

@@ -29,8 +29,8 @@ private final JDBCPostgreSQLConnection connect;
         PasswordLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Management login");
         setFocusableWindowState(false);
-        setUndecorated(true);
         getContentPane().setLayout(new java.awt.BorderLayout(0, 10));
 
         ManagementLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
