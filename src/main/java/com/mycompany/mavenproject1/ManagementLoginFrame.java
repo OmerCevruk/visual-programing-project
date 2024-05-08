@@ -3,9 +3,9 @@ package com.mycompany.mavenproject1;
 import com.mycompany.mavenproject1.JDBCPostgreSQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
 
 public class ManagementLoginFrame extends javax.swing.JFrame {
 
@@ -15,27 +15,31 @@ private final JDBCPostgreSQLConnection connect;
         initComponents();
         connect = new JDBCPostgreSQLConnection();
     }
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ManagementLogin = new javax.swing.JLabel();
-        LoginContainer = new javax.swing.JPanel();
+        Login = new javax.swing.JButton();
+        PasswordLabel = new javax.swing.JLabel();
         FullNameLabel = new javax.swing.JLabel();
         FullName = new javax.swing.JTextField();
         Password = new javax.swing.JPasswordField();
-        Login = new javax.swing.JButton();
-        PasswordLabel = new javax.swing.JLabel();
+        ManagementLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setFocusableWindowState(false);
-        setUndecorated(true);
-        getContentPane().setLayout(new java.awt.BorderLayout(0, 10));
 
-        ManagementLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ManagementLogin.setText("Management Login");
-        getContentPane().add(ManagementLogin, java.awt.BorderLayout.PAGE_START);
+        Login.setText("Login");
+        Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginActionPerformed(evt);
+            }
+        });
+
+        PasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        PasswordLabel.setText("Password");
 
         FullNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         FullNameLabel.setText("Full Name");
@@ -54,35 +58,31 @@ private final JDBCPostgreSQLConnection connect;
             }
         });
 
-        Login.setText("Login");
-        Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
-            }
-        });
+        ManagementLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ManagementLogin.setText("Management Login");
 
-        PasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        PasswordLabel.setText("Password");
-
-        javax.swing.GroupLayout LoginContainerLayout = new javax.swing.GroupLayout(LoginContainer);
-        LoginContainer.setLayout(LoginContainerLayout);
-        LoginContainerLayout.setHorizontalGroup(
-            LoginContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginContainerLayout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addGroup(LoginContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(185, 185, 185)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FullName)
                     .addComponent(FullNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Password, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Password, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                     .addComponent(PasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(185, 185, 185))
+                .addGap(183, 183, 183))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(ManagementLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        LoginContainerLayout.setVerticalGroup(
-            LoginContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginContainerLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(ManagementLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(FullNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(FullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -92,20 +92,14 @@ private final JDBCPostgreSQLConnection connect;
                 .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(Login)
-                .addGap(16, 16, 16))
+                .addGap(40, 40, 40))
         );
-
-        getContentPane().add(LoginContainer, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FullNameActionPerformed
-
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        String fullNameValue = FullName.getText();
+         String fullNameValue = FullName.getText();
         String passwordValue = new String(Password.getPassword());
 
         try (Connection conn = connect.connect()) {
@@ -128,41 +122,17 @@ private final JDBCPostgreSQLConnection connect;
         }
     }//GEN-LAST:event_LoginActionPerformed
 
+    private void FullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FullNameActionPerformed
+
     private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PasswordActionPerformed
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManagementLoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManagementLoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManagementLoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManagementLoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+    
+    public static void main(String args[]) {
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ManagementLoginFrame().setVisible(true);
@@ -174,7 +144,6 @@ private final JDBCPostgreSQLConnection connect;
     private javax.swing.JTextField FullName;
     private javax.swing.JLabel FullNameLabel;
     private javax.swing.JButton Login;
-    private javax.swing.JPanel LoginContainer;
     private javax.swing.JLabel ManagementLogin;
     private javax.swing.JPasswordField Password;
     private javax.swing.JLabel PasswordLabel;
