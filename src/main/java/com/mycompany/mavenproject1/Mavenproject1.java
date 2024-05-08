@@ -28,7 +28,7 @@ public class Mavenproject1 {
             public void run() {
                 // Create and display the GUI
                 
-                new ManagementRegisterFrame().setVisible(true);
+                new ManagementLoginFrame().setVisible(true);
             }
         });
 
