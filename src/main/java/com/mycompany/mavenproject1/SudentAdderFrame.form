@@ -70,8 +70,11 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enter PasWord"/>
+                <Property name="text" type="java.lang.String" value="Enter PassWord"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="EmailLabel">
               <Properties>
@@ -157,9 +160,13 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="AddButton">
           <Properties>
+<<<<<<< Updated upstream
             <Property name="text" type="java.lang.String" value="Add Student"/>
+=======
+            <Property name="text" type="java.lang.String" value="Add"/>
+>>>>>>> Stashed changes
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
