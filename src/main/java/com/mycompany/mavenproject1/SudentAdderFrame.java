@@ -43,8 +43,8 @@ private void populateParentBox() {
     private void initComponents() {
 
         rootPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        headerLabel = new javax.swing.JLabel();
+        studentDataPanel = new javax.swing.JPanel();
         nameLabel = new javax.swing.JLabel();
         Fullname = new javax.swing.JTextField();
         passwordLabel = new javax.swing.JLabel();
@@ -61,39 +61,39 @@ private void populateParentBox() {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         ParentBox = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        addStudentButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         rootPanel.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Add a student");
-        rootPanel.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headerLabel.setText("Add a student");
+        rootPanel.add(headerLabel, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setLayout(new java.awt.GridLayout(8, 2));
+        studentDataPanel.setLayout(new java.awt.GridLayout(8, 2));
 
         nameLabel.setText("Student Name");
-        jPanel1.add(nameLabel);
+        studentDataPanel.add(nameLabel);
 
         Fullname.setText("enter FullName");
-        jPanel1.add(Fullname);
+        studentDataPanel.add(Fullname);
 
         passwordLabel.setText("password");
-        jPanel1.add(passwordLabel);
+        studentDataPanel.add(passwordLabel);
 
         jTextField2.setText("Enter PasWord");
-        jPanel1.add(jTextField2);
+        studentDataPanel.add(jTextField2);
 
         EmailLabel.setText("Email");
-        jPanel1.add(EmailLabel);
+        studentDataPanel.add(EmailLabel);
 
         email.setText("Enter e-mail");
-        jPanel1.add(email);
+        studentDataPanel.add(email);
 
         ClassLabel.setText("class");
-        jPanel1.add(ClassLabel);
+        studentDataPanel.add(ClassLabel);
 
         studentClass.setText("enter student class");
         studentClass.addActionListener(new java.awt.event.ActionListener() {
@@ -101,10 +101,10 @@ private void populateParentBox() {
                 studentClassActionPerformed(evt);
             }
         });
-        jPanel1.add(studentClass);
+        studentDataPanel.add(studentClass);
 
         DOBLabel.setText("Date of birth");
-        jPanel1.add(DOBLabel);
+        studentDataPanel.add(DOBLabel);
 
         DOBField.setText("Enter Date of birth");
         DOBField.addActionListener(new java.awt.event.ActionListener() {
@@ -112,10 +112,10 @@ private void populateParentBox() {
                 DOBFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(DOBField);
+        studentDataPanel.add(DOBField);
 
         AdressLabel.setText("Adress");
-        jPanel1.add(AdressLabel);
+        studentDataPanel.add(AdressLabel);
 
         Adress.setText("Enter adress");
         Adress.addActionListener(new java.awt.event.ActionListener() {
@@ -123,16 +123,16 @@ private void populateParentBox() {
                 AdressActionPerformed(evt);
             }
         });
-        jPanel1.add(Adress);
+        studentDataPanel.add(Adress);
 
         StudentIDLabel.setText("Sudent ID");
-        jPanel1.add(StudentIDLabel);
+        studentDataPanel.add(StudentIDLabel);
 
         jTextField1.setText("Student ID");
-        jPanel1.add(jTextField1);
+        studentDataPanel.add(jTextField1);
 
         jLabel2.setText("Parent");
-        jPanel1.add(jLabel2);
+        studentDataPanel.add(jLabel2);
 
         ParentBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ParentBox.addActionListener(new java.awt.event.ActionListener() {
@@ -140,17 +140,17 @@ private void populateParentBox() {
                 ParentBoxActionPerformed(evt);
             }
         });
-        jPanel1.add(ParentBox);
+        studentDataPanel.add(ParentBox);
 
-        rootPanel.add(jPanel1, java.awt.BorderLayout.CENTER);
+        rootPanel.add(studentDataPanel, java.awt.BorderLayout.CENTER);
 
-        jButton1.setText("Add Student");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addStudentButton.setText("Add Student");
+        addStudentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addStudentButtonActionPerformed(evt);
             }
         });
-        rootPanel.add(jButton1, java.awt.BorderLayout.PAGE_END);
+        rootPanel.add(addStudentButton, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(rootPanel);
 
@@ -169,7 +169,7 @@ private void populateParentBox() {
         // TODO add your handling code here:
     }//GEN-LAST:event_AdressActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
          String fullNameValue = Fullname.getText();
         String passwordValue = jTextField2.getText();
         String emailValue = email.getText();
@@ -197,7 +197,7 @@ private void populateParentBox() {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addStudentButtonActionPerformed
 
     private void ParentBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ParentBoxActionPerformed
         // TODO add your handling code here:
@@ -224,16 +224,16 @@ private void populateParentBox() {
     private javax.swing.JTextField Fullname;
     private javax.swing.JComboBox<String> ParentBox;
     private javax.swing.JLabel StudentIDLabel;
+    private javax.swing.JButton addStudentButton;
     private javax.swing.JTextField email;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel headerLabel;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JPanel rootPanel;
     private javax.swing.JTextField studentClass;
+    private javax.swing.JPanel studentDataPanel;
     // End of variables declaration//GEN-END:variables
 }
