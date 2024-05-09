@@ -61,7 +61,7 @@ private void populateParentBox() {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         ParentBox = new javax.swing.JComboBox<>();
-        AddButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -83,12 +83,7 @@ private void populateParentBox() {
         passwordLabel.setText("password");
         jPanel1.add(passwordLabel);
 
-        jTextField2.setText("Enter PassWord");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
+        jTextField2.setText("Enter PasWord");
         jPanel1.add(jTextField2);
 
         EmailLabel.setText("Email");
@@ -149,7 +144,6 @@ private void populateParentBox() {
 
         rootPanel.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-<<<<<<< Updated upstream
         jButton1.setText("Add Student");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,10 +151,6 @@ private void populateParentBox() {
             }
         });
         rootPanel.add(jButton1, java.awt.BorderLayout.PAGE_END);
-=======
-        AddButton.setText("Add");
-        rootPanel.add(AddButton, java.awt.BorderLayout.PAGE_END);
->>>>>>> Stashed changes
 
         getContentPane().add(rootPanel);
 
@@ -179,7 +169,6 @@ private void populateParentBox() {
         // TODO add your handling code here:
     }//GEN-LAST:event_AdressActionPerformed
 
-<<<<<<< Updated upstream
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          String fullNameValue = Fullname.getText();
         String passwordValue = jTextField2.getText();
@@ -189,39 +178,6 @@ private void populateParentBox() {
         String addressValue = Adress.getText();
         String ChildIDValue = jTextField1.getText();
         String parentValue = (String) ParentBox.getSelectedItem();
-=======
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SudentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SudentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SudentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SudentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
->>>>>>> Stashed changes
 
         
         try (Connection conn = connect.connect()) {
@@ -259,7 +215,6 @@ private void populateParentBox() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddButton;
     private javax.swing.JTextField Adress;
     private javax.swing.JLabel AdressLabel;
     private javax.swing.JLabel ClassLabel;
@@ -270,6 +225,7 @@ private void populateParentBox() {
     private javax.swing.JComboBox<String> ParentBox;
     private javax.swing.JLabel StudentIDLabel;
     private javax.swing.JTextField email;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
