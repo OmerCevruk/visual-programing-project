@@ -36,7 +36,7 @@ public class DashBoardFrame extends javax.swing.JFrame {
         addTeacherButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         parentPanel.setLayout(new java.awt.BorderLayout());
 
