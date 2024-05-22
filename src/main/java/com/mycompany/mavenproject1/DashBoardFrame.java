@@ -15,6 +15,7 @@ public class DashBoardFrame extends javax.swing.JFrame {
      */
     public DashBoardFrame() {
         initComponents();
+        this.userNameLabel.setText(ManagerAuth.UserName);
     }
 
     /**
@@ -56,6 +57,11 @@ public class DashBoardFrame extends javax.swing.JFrame {
         addParentButton.setMaximumSize(new java.awt.Dimension(110, 110));
         addParentButton.setMinimumSize(new java.awt.Dimension(110, 25));
         addParentButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        addParentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addParentButtonActionPerformed(evt);
+            }
+        });
         dashboardPanel.add(addParentButton);
 
         addStudentButton.setText("Add Student");
@@ -65,6 +71,11 @@ public class DashBoardFrame extends javax.swing.JFrame {
         addStudentButton.setMaximumSize(new java.awt.Dimension(110, 110));
         addStudentButton.setMinimumSize(new java.awt.Dimension(110, 25));
         addStudentButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        addStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStudentButtonActionPerformed(evt);
+            }
+        });
         dashboardPanel.add(addStudentButton);
 
         addTeacherButton.setText("Add Teacher");
@@ -74,6 +85,11 @@ public class DashBoardFrame extends javax.swing.JFrame {
         addTeacherButton.setMaximumSize(new java.awt.Dimension(110, 110));
         addTeacherButton.setMinimumSize(new java.awt.Dimension(110, 25));
         addTeacherButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        addTeacherButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTeacherButtonActionPerformed(evt);
+            }
+        });
         dashboardPanel.add(addTeacherButton);
 
         parentPanel.add(dashboardPanel, java.awt.BorderLayout.CENTER);
@@ -82,6 +98,18 @@ public class DashBoardFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addParentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addParentButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addParentButtonActionPerformed
+
+    private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addStudentButtonActionPerformed
+
+    private void addTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeacherButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addTeacherButtonActionPerformed
 
     /**
      * @param args the command line arguments

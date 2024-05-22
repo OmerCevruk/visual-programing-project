@@ -84,6 +84,9 @@
                   <Dimension value="[170, 25]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addParentButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JToggleButton" name="addStudentButton">
               <Properties>
@@ -103,6 +106,9 @@
                   <Dimension value="[170, 25]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addStudentButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JToggleButton" name="addTeacherButton">
               <Properties>
@@ -122,6 +128,9 @@
                   <Dimension value="[170, 25]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addTeacherButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

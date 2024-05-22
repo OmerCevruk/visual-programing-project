@@ -18,7 +18,7 @@ public class ManagerAuth {
     Connection conn = new JDBCPostgreSQLConnection().connect();
     PreparedStatement pstmt;
     public static boolean authenticated = false;
-    public static String  UserName;
+    public static String  UserName = "John Doe";
 
     public ManagerAuth() {
         try {
