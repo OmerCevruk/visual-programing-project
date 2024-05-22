@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ManagementLoginFrame extends javax.swing.JFrame {
@@ -15,6 +17,7 @@ private final JDBCPostgreSQLConnection connect;
         initComponents();
         connect = new JDBCPostgreSQLConnection();
     }
+    ManagerAuth manAuth = new ManagerAuth();
 
     
     @SuppressWarnings("unchecked")
@@ -29,6 +32,7 @@ private final JDBCPostgreSQLConnection connect;
         ManagementLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Management Login");
 
         Login.setText("Login");
         Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -99,27 +103,38 @@ private final JDBCPostgreSQLConnection connect;
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-         String fullNameValue = FullName.getText();
+        String fullNameValue = FullName.getText();
         String passwordValue = new String(Password.getPassword());
-
-        try (Connection conn = connect.connect()) {
-            
-            String sql = "SELECT * FROM public.manager WHERE \"FullName\" = ? AND \"Password\" = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, fullNameValue);
-            pstmt.setString(2, passwordValue);
-            
-            ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next()){
-                JOptionPane.showMessageDialog(this, "Successfully logged in");
-            }else{
+        try {
+            manAuth.authenticate(fullNameValue, passwordValue);
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagementLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(ManagerAuth.authenticated){
+            new DashBoardFrame().setVisible(true);
+            setVisible(false);
+        }
+        else{
                 // Login failed
                 JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        try (Connection conn = connect.connect()) {
+//            
+//            String sql = "SELECT * FROM public.manager WHERE \"FullName\" = ? AND \"Password\" = ?";
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, fullNameValue);
+//            pstmt.setString(2, passwordValue);
+//            
+//            ResultSet rs = pstmt.executeQuery();
+//            
+//            if (rs.next()){
+//                JOptionPane.showMessageDialog(this, "Successfully logged in");
+//                new DashBoardFrame().setVisible(true);
+//                setVisible(false);
+//            }
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
     }//GEN-LAST:event_LoginActionPerformed
 
     private void FullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullNameActionPerformed
