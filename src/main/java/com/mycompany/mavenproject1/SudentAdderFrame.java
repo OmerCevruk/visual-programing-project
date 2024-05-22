@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import java.sql.ResultSet;
-
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class SudentAdderFrame extends javax.swing.JFrame {
 
@@ -77,22 +79,27 @@ private void populateParentBox() {
         nameLabel.setText("Student Name");
         studentDataPanel.add(nameLabel);
 
-        Fullname.setText("enter FullName");
+        Fullname.setText("enter Full Name");
+        Fullname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FullnameActionPerformed(evt);
+            }
+        });
         studentDataPanel.add(Fullname);
 
-        passwordLabel.setText("password");
+        passwordLabel.setText("Password");
         studentDataPanel.add(passwordLabel);
 
-        jTextField2.setText("Enter PasWord");
+        jTextField2.setText("enter password");
         studentDataPanel.add(jTextField2);
 
         EmailLabel.setText("Email");
         studentDataPanel.add(EmailLabel);
 
-        email.setText("Enter e-mail");
+        email.setText("enter e-mail");
         studentDataPanel.add(email);
 
-        ClassLabel.setText("class");
+        ClassLabel.setText("Class");
         studentDataPanel.add(ClassLabel);
 
         studentClass.setText("enter student class");
@@ -106,7 +113,7 @@ private void populateParentBox() {
         DOBLabel.setText("Date of birth");
         studentDataPanel.add(DOBLabel);
 
-        DOBField.setText("Enter Date of birth");
+        DOBField.setText("enter date of birth");
         DOBField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DOBFieldActionPerformed(evt);
@@ -117,7 +124,7 @@ private void populateParentBox() {
         AdressLabel.setText("Adress");
         studentDataPanel.add(AdressLabel);
 
-        Adress.setText("Enter adress");
+        Adress.setText("enter adress");
         Adress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AdressActionPerformed(evt);
@@ -128,7 +135,12 @@ private void populateParentBox() {
         StudentIDLabel.setText("Sudent ID");
         studentDataPanel.add(StudentIDLabel);
 
-        jTextField1.setText("Student ID");
+        jTextField1.setText("enter student ID");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         studentDataPanel.add(jTextField1);
 
         jLabel2.setText("Parent");
@@ -176,9 +188,20 @@ private void populateParentBox() {
         String schoolClassValue = studentClass.getText();
         String dobValue = DOBField.getText();
         String addressValue = Adress.getText();
-        String ChildIDValue = jTextField1.getText();
+        int childIDValue = Integer.parseInt(jTextField1.getText()); // Convert to integer
         String parentValue = (String) ParentBox.getSelectedItem();
 
+        
+    // Date conversion
+    java.sql.Date sqlDate = null;
+    try {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date parsedDate = format.parse(dobValue);
+        sqlDate = new java.sql.Date(parsedDate.getTime());
+    } catch (ParseException e) {
+        JOptionPane.showMessageDialog(this, "Error parsing date: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
         
         try (Connection conn = connect.connect()) {
             String sql = "INSERT INTO public.child(\"FullName\", \"Password\", \"Email\", \"SchoolClass\", \"DOB\", \"Address\", \"ChildID\", \"parent\") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -187,9 +210,9 @@ private void populateParentBox() {
             pstmt.setString(2, passwordValue);
             pstmt.setString(3, emailValue);
             pstmt.setString(4, schoolClassValue);
-            pstmt.setString(5, dobValue);
+            pstmt.setDate(5, sqlDate);
             pstmt.setString(6, addressValue);
-            pstmt.setString(7, ChildIDValue);
+            pstmt.setInt(7, childIDValue); // Set as integer
             pstmt.setString(8, parentValue);
             pstmt.executeUpdate();
 
@@ -202,6 +225,14 @@ private void populateParentBox() {
     private void ParentBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ParentBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ParentBoxActionPerformed
+
+    private void FullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FullnameActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     
     public static void main(String args[]) {

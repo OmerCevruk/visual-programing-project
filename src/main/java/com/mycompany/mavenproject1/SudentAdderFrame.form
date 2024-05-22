@@ -60,17 +60,20 @@
             </Component>
             <Component class="javax.swing.JTextField" name="Fullname">
               <Properties>
-                <Property name="text" type="java.lang.String" value="enter FullName"/>
+                <Property name="text" type="java.lang.String" value="enter Full Name"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FullnameActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="passwordLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="password"/>
+                <Property name="text" type="java.lang.String" value="Password"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enter PasWord"/>
+                <Property name="text" type="java.lang.String" value="enter password"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="EmailLabel">
@@ -80,12 +83,12 @@
             </Component>
             <Component class="javax.swing.JTextField" name="email">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enter e-mail"/>
+                <Property name="text" type="java.lang.String" value="enter e-mail"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="ClassLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="class"/>
+                <Property name="text" type="java.lang.String" value="Class"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="studentClass">
@@ -103,7 +106,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="DOBField">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enter Date of birth"/>
+                <Property name="text" type="java.lang.String" value="enter date of birth"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DOBFieldActionPerformed"/>
@@ -116,7 +119,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="Adress">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enter adress"/>
+                <Property name="text" type="java.lang.String" value="enter adress"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AdressActionPerformed"/>
@@ -129,8 +132,11 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Student ID"/>
+                <Property name="text" type="java.lang.String" value="enter student ID"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
