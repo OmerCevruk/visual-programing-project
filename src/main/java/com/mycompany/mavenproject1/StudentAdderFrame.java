@@ -10,12 +10,12 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class SudentAdderFrame extends javax.swing.JFrame {
+public class StudentAdderFrame extends javax.swing.JFrame {
 
     
     private final JDBCPostgreSQLConnection connect;
 
-    public SudentAdderFrame() {
+    public StudentAdderFrame() {
         initComponents();
         connect = new JDBCPostgreSQLConnection();
         populateParentBox(); 
@@ -226,7 +226,7 @@ private void populateParentBox() {
             pstmt.setInt(9, cityIDValue);
             pstmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Student added successfully");
+            JOptionPane.showMessageDialog(this, "Student added to system successfully");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -250,7 +250,7 @@ private void populateParentBox() {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SudentAdderFrame().setVisible(true);
+                new StudentAdderFrame().setVisible(true);
             }
         });
     }

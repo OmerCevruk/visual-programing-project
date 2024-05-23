@@ -25,12 +25,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <EmptySpace min="0" pref="618" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="headerLabel" min="-2" pref="618" max="-2" attributes="0"/>
-                      <Component id="studentDataPanel" min="-2" pref="618" max="-2" attributes="0"/>
-                      <Component id="addParentButton" min="-2" pref="618" max="-2" attributes="0"/>
+                      <Component id="headerLabel" alignment="0" min="-2" pref="618" max="-2" attributes="0"/>
+                      <Component id="studentDataPanel" alignment="0" min="-2" pref="618" max="-2" attributes="0"/>
+                      <Component id="addTeacherButton" alignment="0" min="-2" pref="618" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -41,13 +41,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <EmptySpace min="0" pref="338" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   <Component id="headerLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="studentDataPanel" min="-2" pref="298" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="addParentButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="addTeacherButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -55,10 +55,18 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JButton" name="addTeacherButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add Teacher"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addTeacherButtonActionPerformed"/>
+      </Events>
+    </Component>
     <Component class="javax.swing.JLabel" name="headerLabel">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Add a parent"/>
+        <Property name="text" type="java.lang.String" value="Add a teacher"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="studentDataPanel">
@@ -71,7 +79,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="nameLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Parent Name"/>
+            <Property name="text" type="java.lang.String" value="Teacher Name"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="Fullname">
@@ -140,13 +148,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="addParentButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Add Parent"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addParentButtonActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>
