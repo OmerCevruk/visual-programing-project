@@ -1,3 +1,4 @@
+com/mycompany/mavenproject1/ParentAdderFrame$1.class
 com/mycompany/mavenproject1/ParentRegisterFrame$4.class
 com/mycompany/mavenproject1/DashBoardFrame$4.class
 com/mycompany/mavenproject1/ManagementRegisterFrame$1.class
@@ -15,6 +16,9 @@ com/mycompany/mavenproject1/ManagementLoginFrame.class
 com/mycompany/mavenproject1/ManagementLoginFrame$4.class
 com/mycompany/mavenproject1/ManagementRegisterFrame$3.class
 com/mycompany/mavenproject1/DashBoardFrame$1.class
+com/mycompany/mavenproject1/ParentAdderFrame.class
+com/mycompany/mavenproject1/ParentAdderFrame$4.class
+com/mycompany/mavenproject1/ParentAdderFrame$2.class
 com/mycompany/mavenproject1/SudentAdderFrame$5.class
 com/mycompany/mavenproject1/JDBCPostgreSQLConnection.class
 com/mycompany/mavenproject1/ParentRegisterFrame$3.class
@@ -26,6 +30,7 @@ com/mycompany/mavenproject1/ManagementLoginFrame$2.class
 com/mycompany/mavenproject1/ParentLoginFrame$4.class
 com/mycompany/mavenproject1/ParentRegisterFrame$1.class
 com/mycompany/mavenproject1/DashBoardFrame$3.class
+com/mycompany/mavenproject1/ParentAdderFrame$5.class
 com/mycompany/mavenproject1/SudentAdderFrame$6.class
 com/mycompany/mavenproject1/ManagementRegisterFrame$2.class
 com/mycompany/mavenproject1/ManagerAuth.class
@@ -34,5 +39,6 @@ com/mycompany/mavenproject1/SudentAdderFrame$1.class
 com/mycompany/mavenproject1/SudentAdderFrame$4.class
 com/mycompany/mavenproject1/ParentRegisterFrame$2.class
 com/mycompany/mavenproject1/ParentLoginFrame$3.class
+com/mycompany/mavenproject1/ParentAdderFrame$3.class
 com/mycompany/mavenproject1/ManagementLoginFrame$3.class
 com/mycompany/mavenproject1/ParentLoginFrame.class

@@ -76,7 +76,7 @@ private void populateParentBox() {
         headerLabel.setText("Add a student");
         rootPanel.add(headerLabel, java.awt.BorderLayout.PAGE_START);
 
-        studentDataPanel.setLayout(new java.awt.GridLayout(9, 2));
+        studentDataPanel.setLayout(new java.awt.GridLayout(9, 2, 0, 5));
 
         nameLabel.setText("Student Name");
         studentDataPanel.add(nameLabel);
@@ -134,7 +134,7 @@ private void populateParentBox() {
         });
         studentDataPanel.add(Adress);
 
-        StudentIDLabel.setText("Sudent ID");
+        StudentIDLabel.setText("Student ID");
         studentDataPanel.add(StudentIDLabel);
 
         studentid.setText("enter student ID");
