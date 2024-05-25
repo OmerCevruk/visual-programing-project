@@ -119,7 +119,7 @@ public class ClassRegistrationFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerClassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerClassButtonActionPerformed
- try {
+  try {
             int classID = Integer.parseInt(classIDTextField.getText());
             String className = classNameTextField.getText();
             String studentIDs = studentIDTextField.getText();
@@ -141,7 +141,7 @@ public class ClassRegistrationFrame extends javax.swing.JFrame {
 
                 // Assign students to class
                 for (String studentID : studentIDs.split(",")) {
-                    String sqlStudent = "INSERT INTO public.class_student (\"ClassID\", \"StudentID\") VALUES (?, ?)";
+                    String sqlStudent = "INSERT INTO public.class_student (\"class_id\", \"child_id\") VALUES (?, ?)";
                     PreparedStatement pstmtStudent = conn.prepareStatement(sqlStudent);
                     pstmtStudent.setInt(1, classID);
                     pstmtStudent.setInt(2, Integer.parseInt(studentID.trim()));

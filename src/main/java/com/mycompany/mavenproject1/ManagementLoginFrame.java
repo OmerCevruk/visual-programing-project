@@ -111,7 +111,7 @@ private final JDBCPostgreSQLConnection connect;
             Logger.getLogger(ManagementLoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(ManagerAuth.authenticated){
-            new DashBoardFrame().setVisible(true);
+            new ManagmentDashboardFrame().setVisible(true);
             setVisible(false);
         }
         else{
