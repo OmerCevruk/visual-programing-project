@@ -16,60 +16,113 @@ import javax.swing.table.TableColumn;
 
 /**
  *
- * @author funghu
+ * @author funghu&
  */
 public class CanteenPurchaseFrame extends javax.swing.JFrame {
-    Connection conn = new JDBCPostgreSQLConnection().connect();
+    Connection conn;
+    private javax.swing.JTable table;
     
-    
-    Vector<Vector<Object>> data = new Vector<Vector<String>>();
+    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
     /**
      * Creates new form CanteenPurchaseFrame
      */
     public CanteenPurchaseFrame() {
         initComponents();
+        this.table = new javax.swing.JTable();
+        initializeDatabaseConnection();
+        loadDataFromDatabase();
+        populateTable();
+        jScrollPane1.setViewportView(table);
+//        this.ItemTable = this.table;
+//        this.ItemTable.repaint();
         
+        
+    }
+    
+    private void initializeDatabaseConnection() {
         try {
-            Statement stmt = conn.createStatement();
-            // Execute the query to retrieve the data from the canteen_ product table
-            ResultSet rs = stmt.executeQuery("SELECT * FROM public.canteen_product");
-            while (rs.next()) {
-                Vector<Object> row = new Vector<String>();
-                row.add(rs.getString("ProductName"));
-                row.add(String.valueOf(rs.getDouble("Price")));
-                row.add(false);
-                row.add(0);
-                data.add(row);
-                
-                
-            }
-            DefaultTableModel tableModel = new DefaultTableModel(data, new Object[]{"Product Name", "Price", "Select", "Count"}) {
-                @Override
-                public Class<?> getColumnClass(int columnIndex) {
-                    switch (columnIndex) {
-                        case 2: return Boolean.class; // Checkbox column
-                        case 3: return Integer.class; // Count column
-                        default: return String.class;
-                    }
-                }
-
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return column == 2 || column == 3; // Make checkbox and count columns editable
-                }
-            }; 
-
-            this.ItemTable.setModel(tableModel);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, null, ex);
+            conn = new JDBCPostgreSQLConnection().connect();
+        } catch (Exception e) {
+            Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Database connection failed", e);
         }
-        // Create a table model from the data vector
-
-        
-
+    }
+    
+     /**
+     * Loads data from the database.
+     */
+    private void loadDataFromDatabase() {
+        data = new Vector<>();
+        try (Statement stmt = conn.createStatement();
+           ResultSet rs = stmt.executeQuery("SELECT * FROM public.canteen_product")) {
+            while (rs.next()) {
+                Vector<Object> row = new Vector<>();
+                row.add(rs.getString("ProductName"));
+                row.add(rs.getDouble("Price")); // Directly add the price as Double
+                row.add(0); // Count
+                data.add(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Failed to load data", ex);
+        }
     }
 
+    private void populateTable() {
+        if (data.isEmpty()) {
+            Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.WARNING, "No data to display");
+            return;
+        }
+
+        Object[][] tableData = convertDataToTableFormat();
+        DefaultTableModel tableModel = createTableModel(tableData);
+
+        table.setModel(tableModel);
+        tableModel.fireTableDataChanged();
+    }
+    
+     /**
+     * Converts the Vector data into a 2D Object array for the table model.
+     */
+    private Object[][] convertDataToTableFormat() {
+        int rowCount = data.size();
+        int colCount = data.get(0).size();
+        Object[][] tableData = new Object[rowCount][colCount];
+
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < colCount; j++) {
+                tableData[i][j] = data.get(i).get(j);
+                System.out.println(tableData[i][j]);
+            }
+        }
+
+        return tableData;
+    }
+    
+     /**
+     * Creates a table model with the specified data.
+     */
+    private DefaultTableModel createTableModel(Object[][] tableData) {
+        // Exclude the checkbox column
+       return new DefaultTableModel(tableData, new Object[]{"Product Name", "Price", "Count"}) {
+           @Override
+           public Class<?> getColumnClass(int columnIndex) {
+               switch (columnIndex) {
+                   case 1:
+                       return Double.class; // Price column
+                   case 2:
+                       return Integer.class; // Count column
+                   default:
+                       return String.class; // Product Name column
+               }
+           }
+
+           @Override
+           public boolean isCellEditable(int row, int column) {
+               return column == 2; // Make count column editable
+           }
+       };
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
