@@ -3,11 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.mavenproject1;
-
+import java.util.Calendar;
+import java.sql.CallableStatement;
+import java.util.List;
+import javafx.util.Pair;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -122,6 +128,19 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
        };
     }
     
+    private List<Pair<String, Integer>> getNameAndCountForEachRow() {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        List<Pair<String, Integer>> nameAndCountList = new ArrayList<>();
+
+        for (int row = 0; row < tableModel.getRowCount(); row++) {
+            String productName = (String) tableModel.getValueAt(row, 0); // Assuming "Product Name" is in the first column
+            int count = (int) tableModel.getValueAt(row, 2); // Assuming "Count" is in the third column
+
+            nameAndCountList.add(new Pair<>(productName, count));
+        }
+        return nameAndCountList;
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,11 +158,13 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ItemTable = new javax.swing.JTable();
         BottomPanel = new javax.swing.JPanel();
+        StudentName = new javax.swing.JTextField();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 32767));
         ConfirmButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        StudentNameLabel.setText("Student Name");
+        StudentNameLabel.setText("Canteen");
         TopPanel.add(StudentNameLabel);
 
         BoxPanel.setLayout(new javax.swing.BoxLayout(BoxPanel, javax.swing.BoxLayout.LINE_AXIS));
@@ -174,7 +195,21 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
 
         getContentPane().add(CenterPanel, java.awt.BorderLayout.CENTER);
 
+        StudentName.setText("Enter Student name");
+        StudentName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StudentNameActionPerformed(evt);
+            }
+        });
+        BottomPanel.add(StudentName);
+        BottomPanel.add(filler1);
+
         ConfirmButton.setText("ConfirmButton");
+        ConfirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmButtonActionPerformed(evt);
+            }
+        });
         BottomPanel.add(ConfirmButton);
 
         getContentPane().add(BottomPanel, java.awt.BorderLayout.PAGE_END);
@@ -185,6 +220,34 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private void ItemTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ItemTablePropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_ItemTablePropertyChange
+
+    private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
+        String studentName = StudentName.getText(); // Get the student name from the text field
+        List<Pair<String, Integer>> items = getNameAndCountForEachRow(); // Get table data
+        // Iterate through table data and call the procedure for each product
+        for (Pair<String, Integer> item : items) {
+            String productName = item.getKey();
+            int count = item.getValue();
+            
+            if(count == 0){continue;}
+
+            try {                          
+                // Call the stored procedure with the student name, product name, and current timestamp
+                CallableStatement stmt = conn.prepareCall("{CALL make_canteen_purchase_by_names(?, ?)}");
+                stmt.setString(1, studentName);
+                stmt.setString(2, productName);
+                stmt.execute();
+                  
+            } catch (SQLException ex) {
+                Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "procedure call error at canteen", ex);
+                // Handle SQLException as needed
+            }
+        }
+    }//GEN-LAST:event_ConfirmButtonActionPerformed
+
+    private void StudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentNameActionPerformed
+        
+    }//GEN-LAST:event_StudentNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,8 +290,10 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private javax.swing.JPanel CenterPanel;
     private javax.swing.JButton ConfirmButton;
     private javax.swing.JTable ItemTable;
+    private javax.swing.JTextField StudentName;
     private javax.swing.JLabel StudentNameLabel;
     private javax.swing.JPanel TopPanel;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
