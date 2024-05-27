@@ -111,14 +111,11 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
        return new DefaultTableModel(tableData, new Object[]{"Product Name", "Price", "Count"}) {
            @Override
            public Class<?> getColumnClass(int columnIndex) {
-               switch (columnIndex) {
-                   case 1:
-                       return Double.class; // Price column
-                   case 2:
-                       return Integer.class; // Count column
-                   default:
-                       return String.class; // Product Name column
-               }
+               return switch (columnIndex) {
+                   case 1 -> Double.class;
+                   case 2 -> Integer.class;
+                   default -> String.class;
+               }; 
            }
 
            @Override
@@ -224,6 +221,7 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
         String studentName = StudentName.getText(); // Get the student name from the text field
         List<Pair<String, Integer>> items = getNameAndCountForEachRow(); // Get table data
+        
         // Iterate through table data and call the procedure for each product
         for (Pair<String, Integer> item : items) {
             String productName = item.getKey();
@@ -233,14 +231,15 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
 
             try {                          
                 // Call the stored procedure with the student name, product name, and current timestamp
-                CallableStatement stmt = conn.prepareCall("{CALL make_canteen_purchase_by_names(?, ?)}");
+                CallableStatement stmt = conn.prepareCall("CALL make_canteen_purchase_by_names(?, ?)");
                 stmt.setString(1, studentName);
                 stmt.setString(2, productName);
                 stmt.execute();
-                  
+                //TODO show a dialog that tells the user the transaction is complete
             } catch (SQLException ex) {
+                //TODO show a dialog when item is restricted
                 Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "procedure call error at canteen", ex);
-                // Handle SQLException as needed
+
             }
         }
     }//GEN-LAST:event_ConfirmButtonActionPerformed
