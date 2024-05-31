@@ -23,7 +23,7 @@ import javax.swing.event.TableModelListener;
 
 /**
  *
- * @author funghu&
+ * @author Omer
  */
 public class CanteenPurchaseFrame extends javax.swing.JFrame {
     Connection conn;

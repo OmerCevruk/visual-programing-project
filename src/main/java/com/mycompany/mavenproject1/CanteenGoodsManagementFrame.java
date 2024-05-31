@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -22,13 +23,16 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author funghu
+ * @author Omer
  */
 public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
     Connection conn;
     private javax.swing.JTable table;
     
+    
     Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+    Vector<Double> originalPrices = new Vector<>();
+    
     /**
      * Creates new form CanteenGoodsManagementFrame
      */
@@ -53,6 +57,7 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
 
     private void loadDataFromDatabase() {
         data = new Vector<>();
+        originalPrices = new Vector<>();
         try (Statement stmt = conn.createStatement();
            ResultSet rs = stmt.executeQuery("SELECT * FROM public.canteen_product")) {
             while (rs.next()) {
@@ -61,6 +66,7 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
                 row.add(rs.getDouble("Price")); // Directly add the price as Double
                 row.add(false); // fills the remove collum
                 data.add(row);
+                originalPrices.add(rs.getDouble("Price"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Failed to load data", ex);
@@ -121,7 +127,7 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
 
            @Override
            public boolean isCellEditable(int row, int column) {
-               return column == 2; // Make Remove column editable
+               return column == 1 || column == 2; //price and remove collums
            }
            
            
@@ -137,8 +143,24 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
             totalPrice += price;
         }
         
-        totalPrice = totalPrice/tableModel.getRowCount();
-        AverageLabel.setText("Total: " + totalPrice + " tl");
+        double average = totalPrice/tableModel.getRowCount();
+        String averagePrice =new DecimalFormat("##.##").format(average) ;
+        AverageLabel.setText("Average Price: " +averagePrice+ " tl");
+    }
+    
+    private void updatePriceInDatabase(int row) {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        String productName = (String) tableModel.getValueAt(row, 0);
+        double newPrice = (double) tableModel.getValueAt(row, 1);
+        
+        String updateSQL = "UPDATE public.canteen_product SET \"Price\" = ? WHERE \"ProductName\" = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+            pstmt.setDouble(1, newPrice);
+            pstmt.setString(2, productName);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CanteenGoodsManagementFrame.class.getName()).log(Level.SEVERE, "Failed to update price", ex);
+        }
     }
     
     private void removeSelectedRows() {
@@ -202,6 +224,41 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
             Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Failed to add product", ex);
         }
     }
+    
+    public List<Vector<Object>> getModifiedPriceRows() {
+        List<Vector<Object>> modifiedRows = new ArrayList<>();
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+
+        for (int row = 0; row < tableModel.getRowCount(); row++) {
+            double currentPrice = (double) tableModel.getValueAt(row, 1);
+            double originalPrice = originalPrices.get(row);
+            if (currentPrice != originalPrice) {
+                Vector<Object> rowData = new Vector<>();
+                rowData.add(tableModel.getValueAt(row, 0)); // ProductName
+                rowData.add(currentPrice); // Price
+                rowData.add(tableModel.getValueAt(row, 2)); // Remove
+                modifiedRows.add(rowData);
+            }
+        }
+
+        return modifiedRows;
+    }
+    
+    public void updatePrices(List<Vector<Object>> modifiedRows){
+        String updateSQL = "UPDATE public.canteen_product SET \"Price\" = ? WHERE \"ProductName\" = ?";
+
+        for (Vector<Object> modifiedRow : modifiedRows) {
+            try(PreparedStatement pstmt = conn.prepareStatement(updateSQL)){
+                pstmt.setString(2, (String) modifiedRow.get(0));
+                pstmt.setDouble(1, (double) modifiedRow.get(1));
+                pstmt.executeUpdate();
+
+            }catch(SQLException ex){
+                Logger.getLogger(CanteenGoodsManagementFrame.class.getName()).log(Level.SEVERE, "Failed to update price", ex);
+            }  
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -287,9 +344,12 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
  
         int confirmDialogResult = JOptionPane.showConfirmDialog(null, "Do you want to submit this data?", "Submit Data", JOptionPane.YES_NO_OPTION);
         if (confirmDialogResult == JOptionPane.YES_OPTION) {
+            updatePrices(getModifiedPriceRows());
             removeSelectedRows();
-            addRowToTable();   
+            addRowToTable(); 
+
         }
+        
     }//GEN-LAST:event_SubmitButtonActionPerformed
 
     /**
