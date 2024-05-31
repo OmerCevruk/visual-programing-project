@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -93,12 +94,12 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         int colCount = data.get(0).size();
         Object[][] tableData = new Object[rowCount][colCount];
 
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < colCount; j++) {
-                tableData[i][j] = data.get(i).get(j);
-                System.out.println(tableData[i][j]);
-            }
-        }
+//        for (int i = 0; i < rowCount; i++) {
+//            for (int j = 0; j < colCount; j++) {
+//                tableData[i][j] = data.get(i).get(j);
+//                System.out.println(tableData[i][j]);
+//            }
+//        }
 
         return tableData;
     }
@@ -221,25 +222,50 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
         String studentName = StudentName.getText(); // Get the student name from the text field
         List<Pair<String, Integer>> items = getNameAndCountForEachRow(); // Get table data
-        
         // Iterate through table data and call the procedure for each product
         for (Pair<String, Integer> item : items) {
             String productName = item.getKey();
             int count = item.getValue();
+            try {
+                conn.setAutoCommit(false);
+            } catch (SQLException ex) {
+                Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             if(count == 0){continue;}
-
-            try {                          
+            for(int i = 0; i < count; i++){
+                try {                          
                 // Call the stored procedure with the student name, product name, and current timestamp
                 CallableStatement stmt = conn.prepareCall("CALL make_canteen_purchase_by_names(?, ?)");
                 stmt.setString(1, studentName);
                 stmt.setString(2, productName);
                 stmt.execute();
                 //TODO show a dialog that tells the user the transaction is complete
+                } catch (SQLException ex) {
+                    String dialogMsg = "";
+                    if (ex.getMessage().contains("restricted")) {
+                        dialogMsg = "This item is restricted.";
+                    } else if (ex.getMessage().contains("Insufficient balance")) {
+                        dialogMsg = "Not enough balance to complete the purchase.";
+                    } else if (ex.getMessage().contains(studentName)) {
+                        dialogMsg = "No student named " + studentName + " was found.";
+                    } else {
+                        dialogMsg = ex.getMessage(); // show the actual error message
+                    }  
+                    JOptionPane.showMessageDialog(null, dialogMsg, "Error", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        conn.rollback();
+                    } catch (SQLException ex1) {
+                        Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                    return;
+                }
+            }
+            try {
+                conn.commit();
+                JOptionPane.showMessageDialog(null, "Transaction Succesfull", "Purchase complete", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
-                //TODO show a dialog when item is restricted
-                Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "procedure call error at canteen", ex);
-
+                Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_ConfirmButtonActionPerformed
