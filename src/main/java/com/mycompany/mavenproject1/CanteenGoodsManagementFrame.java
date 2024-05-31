@@ -4,42 +4,36 @@
  */
 package com.mycompany.mavenproject1;
 
-import java.sql.CallableStatement;
-import java.util.List;
-import javafx.util.Pair;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author funghu&
+ * @author funghu
  */
-public class CanteenPurchaseFrame extends javax.swing.JFrame {
+public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
     Connection conn;
     private javax.swing.JTable table;
     
     Vector<Vector<Object>> data = new Vector<Vector<Object>>();
     /**
-     * Creates new form CanteenPurchaseFrame
+     * Creates new form CanteenGoodsManagementFrame
      */
-    public CanteenPurchaseFrame() {
+    public CanteenGoodsManagementFrame() {
         initComponents();
         this.table = new javax.swing.JTable();
         initializeDatabaseConnection();
         loadDataFromDatabase();
         populateTable();
-        TableScrollPane.setViewportView(table);                 
+        TableScrollPane.setViewportView(table); 
     }
     
     private void initializeDatabaseConnection() {
@@ -49,10 +43,7 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
             Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Database connection failed", e);
         }
     }
-    
-     /**
-     * Loads data from the database.
-     */
+
     private void loadDataFromDatabase() {
         data = new Vector<>();
         try (Statement stmt = conn.createStatement();
@@ -68,7 +59,6 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
             Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Failed to load data", ex);
         }
     }
-
     private void populateTable() {
         if (data.isEmpty()) {
             Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.WARNING, "No data to display");
@@ -110,9 +100,6 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         return tableData;
     }
     
-     /**
-     * Creates a table model with the specified data.
-     */
     private DefaultTableModel createTableModel(Object[][] tableData) {
         // Exclude the checkbox column
        return new DefaultTableModel(tableData, new Object[]{"Product Name", "Price", "Count"}) {
@@ -134,7 +121,7 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
        };
     }
     
-    private void updateTotalPrice() {
+    private void updateAVGPrice() {
         double totalPrice = 0;
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         for (int row = 0; row < tableModel.getRowCount(); row++) {
@@ -144,20 +131,6 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         }
         TotalPriceLabel.setText("Total: " + totalPrice + " tl");
     }
-    
-    private List<Pair<String, Integer>> getNameAndCountForEachRow() {
-        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        List<Pair<String, Integer>> nameAndCountList = new ArrayList<>();
-
-        for (int row = 0; row < tableModel.getRowCount(); row++) {
-            String productName = (String) tableModel.getValueAt(row, 0); // Assuming "Product Name" is in the first column
-            int count = (int) tableModel.getValueAt(row, 2); // Assuming "Count" is in the third column
-
-            nameAndCountList.add(new Pair<>(productName, count));
-        }
-        return nameAndCountList;
-    }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,130 +142,55 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         TopPanel = new javax.swing.JPanel();
-        BoxPanel = new javax.swing.JPanel();
-        TotalPriceLabel = new javax.swing.JLabel();
         CenterPanel = new javax.swing.JPanel();
         TableScrollPane = new javax.swing.JScrollPane();
-        ItemTable = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         BottomPanel = new javax.swing.JPanel();
-        StudentName = new javax.swing.JTextField();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 32767));
-        ConfirmButton = new javax.swing.JButton();
+        ProductName = new javax.swing.JTextField();
+        Price = new javax.swing.JTextField();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(90, 0), new java.awt.Dimension(32767, 0));
+        SubmitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Canteen");
-
-        BoxPanel.setLayout(new javax.swing.BoxLayout(BoxPanel, javax.swing.BoxLayout.LINE_AXIS));
-        TopPanel.add(BoxPanel);
-
-        TotalPriceLabel.setText("Total:0 tl");
-        TopPanel.add(TotalPriceLabel);
-
         getContentPane().add(TopPanel, java.awt.BorderLayout.PAGE_START);
 
         CenterPanel.setLayout(new javax.swing.BoxLayout(CenterPanel, javax.swing.BoxLayout.LINE_AXIS));
 
-        ItemTable.setAutoCreateColumnsFromModel(false);
-        ItemTable.setAutoCreateRowSorter(true);
-        ItemTable.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        ItemTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                ItemTablePropertyChange(evt);
-            }
-        });
-        TableScrollPane.setViewportView(ItemTable);
+        TableScrollPane.setViewportView(jTable1);
 
         CenterPanel.add(TableScrollPane);
 
         getContentPane().add(CenterPanel, java.awt.BorderLayout.CENTER);
 
-        StudentName.setText("Enter Student name");
-        StudentName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StudentNameActionPerformed(evt);
-            }
-        });
-        BottomPanel.add(StudentName);
+        BottomPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 10));
+
+        ProductName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ProductName.setText("ProductName");
+        BottomPanel.add(ProductName);
+
+        Price.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Price.setText("Price");
+        BottomPanel.add(Price);
         BottomPanel.add(filler1);
 
-        ConfirmButton.setText("ConfirmButton");
-        ConfirmButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfirmButtonActionPerformed(evt);
-            }
-        });
-        BottomPanel.add(ConfirmButton);
+        SubmitButton.setText("Submit");
+        BottomPanel.add(SubmitButton);
 
         getContentPane().add(BottomPanel, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ItemTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ItemTablePropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ItemTablePropertyChange
-
-    private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
-        String studentName = StudentName.getText(); // Get the student name from the text field
-        List<Pair<String, Integer>> items = getNameAndCountForEachRow(); // Get table data
-        // Iterate through table data and call the procedure for each product
-        for (Pair<String, Integer> item : items) {
-            String productName = item.getKey();
-            int count = item.getValue();
-            try {
-                conn.setAutoCommit(false);
-            } catch (SQLException ex) {
-                Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            if(count == 0){continue;}
-            for(int i = 0; i < count; i++){
-                try {                          
-                // Call the stored procedure with the student name, product name, and current timestamp
-                CallableStatement stmt = conn.prepareCall("CALL make_canteen_purchase_by_names(?, ?)");
-                stmt.setString(1, studentName);
-                stmt.setString(2, productName);
-                stmt.execute();
-                //TODO show a dialog that tells the user the transaction is complete
-                } catch (SQLException ex) {
-                    String dialogMsg = "";
-                    if (ex.getMessage().contains("restricted")) {
-                        dialogMsg = "This item is restricted.";
-                    } else if (ex.getMessage().contains("Insufficient balance")) {
-                        dialogMsg = "Not enough balance to complete the purchase.";
-                    } else if (ex.getMessage().contains(studentName)) {
-                        dialogMsg = "No student named " + studentName + " was found.";
-                    } else {
-                        dialogMsg = ex.getMessage(); // show the actual error message
-                    }  
-                    JOptionPane.showMessageDialog(null, dialogMsg, "Error", JOptionPane.ERROR_MESSAGE);
-                    try {
-                        conn.rollback();
-                    } catch (SQLException ex1) {
-                        Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, null, ex1);
-                    }
-                    return;
-                }
-            }
-            try {
-                conn.commit();
-                JOptionPane.showMessageDialog(null, "Transaction Succesfull", "Purchase complete", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_ConfirmButtonActionPerformed
-
-    private void StudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentNameActionPerformed
-        
-    }//GEN-LAST:event_StudentNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,34 +209,33 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CanteenGoodsManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CanteenGoodsManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CanteenGoodsManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CanteenGoodsManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CanteenPurchaseFrame().setVisible(true);
+                new CanteenGoodsManagementFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BottomPanel;
-    private javax.swing.JPanel BoxPanel;
     private javax.swing.JPanel CenterPanel;
-    private javax.swing.JButton ConfirmButton;
-    private javax.swing.JTable ItemTable;
-    private javax.swing.JTextField StudentName;
+    private javax.swing.JTextField Price;
+    private javax.swing.JTextField ProductName;
+    private javax.swing.JButton SubmitButton;
     private javax.swing.JScrollPane TableScrollPane;
     private javax.swing.JPanel TopPanel;
-    private javax.swing.JLabel TotalPriceLabel;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
