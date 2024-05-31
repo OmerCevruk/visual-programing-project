@@ -15,6 +15,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -169,16 +170,24 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
         // Get product name and price from text fields
-        String productName = ProductName.getText();
-        double price = Double.parseDouble(Price.getText());
+        String productName = ProductName.getText().trim();
+        double price;
+        try {
+            price = Double.parseDouble(Price.getText().trim());
+        } catch (NumberFormatException e) {
+            return;
+        }
+        // Check if product name or price is empty string
+        if (productName.isEmpty()) {
+            return;
+        } else {
+        }
 
         // Add data to the table model
         Object[] rowData = {productName, price, false};
         tableModel.addRow(rowData);
 
         addProductToDatabase(productName, price);
-
-        // Clear text fields
         ProductName.setText("");
         Price.setText("");
     }
@@ -212,11 +221,12 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         BottomPanel = new javax.swing.JPanel();
         ProductName = new javax.swing.JTextField();
         Price = new javax.swing.JTextField();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(90, 0), new java.awt.Dimension(32767, 0));
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(32767, 0));
         SubmitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Goods Management");
+        setMinimumSize(new java.awt.Dimension(500, 90));
 
         AverageLabel.setText("Average Price 0 tl");
         TopPanel.add(AverageLabel);
@@ -247,11 +257,15 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         BottomPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
 
         ProductName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ProductName.setText("ProductName");
+        ProductName.setText("Product Name");
+        ProductName.setToolTipText("Name of the product you want to add");
+        ProductName.setPreferredSize(new java.awt.Dimension(120, 25));
         BottomPanel.add(ProductName);
 
         Price.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Price.setText("Price");
+        Price.setToolTipText("Price of the product that you want to add");
+        Price.setPreferredSize(new java.awt.Dimension(120, 25));
         BottomPanel.add(Price);
         BottomPanel.add(filler1);
 
@@ -269,8 +283,12 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitButtonActionPerformed
-        removeSelectedRows();
-        addRowToTable();
+ 
+        int confirmDialogResult = JOptionPane.showConfirmDialog(null, "Do you want to submit this data?", "Submit Data", JOptionPane.YES_NO_OPTION);
+        if (confirmDialogResult == JOptionPane.YES_OPTION) {
+            removeSelectedRows();
+            addRowToTable();   
+        }
     }//GEN-LAST:event_SubmitButtonActionPerformed
 
     /**

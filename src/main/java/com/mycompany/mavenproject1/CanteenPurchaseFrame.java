@@ -219,6 +219,7 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         getContentPane().add(CenterPanel, java.awt.BorderLayout.CENTER);
 
         StudentName.setText("Enter Student name");
+        StudentName.setToolTipText("name of the buyer");
         StudentName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StudentNameActionPerformed(evt);
