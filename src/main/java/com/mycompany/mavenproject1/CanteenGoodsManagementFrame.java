@@ -270,6 +270,7 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         BottomPanel.add(filler1);
 
         SubmitButton.setText("Submit");
+        SubmitButton.setToolTipText("Submit all the changes");
         SubmitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SubmitButtonActionPerformed(evt);

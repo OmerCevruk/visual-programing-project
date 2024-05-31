@@ -121,6 +121,7 @@
         <Component class="javax.swing.JButton" name="ConfirmButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="ConfirmButton"/>
+            <Property name="toolTipText" type="java.lang.String" value="Finish purchase"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConfirmButtonActionPerformed"/>

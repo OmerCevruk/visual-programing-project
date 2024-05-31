@@ -229,6 +229,7 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         BottomPanel.add(filler1);
 
         ConfirmButton.setText("ConfirmButton");
+        ConfirmButton.setToolTipText("Finish purchase");
         ConfirmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConfirmButtonActionPerformed(evt);
