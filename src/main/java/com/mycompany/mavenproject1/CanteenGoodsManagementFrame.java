@@ -5,12 +5,16 @@
 package com.mycompany.mavenproject1;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -34,6 +38,8 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         loadDataFromDatabase();
         populateTable();
         TableScrollPane.setViewportView(table); 
+        updateAVGPrice();
+        
     }
     
     private void initializeDatabaseConnection() {
@@ -52,7 +58,7 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
                 Vector<Object> row = new Vector<>();
                 row.add(rs.getString("ProductName"));
                 row.add(rs.getDouble("Price")); // Directly add the price as Double
-                row.add(0); // Count
+                row.add(false); // fills the remove collum
                 data.add(row);
             }
         } catch (SQLException ex) {
@@ -75,7 +81,7 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
             @Override
             public void tableChanged(TableModelEvent e) {
                 if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
-                    updateTotalPrice();
+                    updateAVGPrice();
                 }
             }
         });
@@ -102,19 +108,19 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
     
     private DefaultTableModel createTableModel(Object[][] tableData) {
         // Exclude the checkbox column
-       return new DefaultTableModel(tableData, new Object[]{"Product Name", "Price", "Count"}) {
+       return new DefaultTableModel(tableData, new Object[]{"Product Name", "Price", "Remove"}) {
            @Override
            public Class<?> getColumnClass(int columnIndex) {
                return switch (columnIndex) {
                    case 1 -> Double.class;
-                   case 2 -> Integer.class;
+                   case 2 -> Boolean.class;
                    default -> String.class;
                }; 
            }
 
            @Override
            public boolean isCellEditable(int row, int column) {
-               return column == 2; // Make count column editable
+               return column == 2; // Make Remove column editable
            }
            
            
@@ -124,14 +130,69 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
     private void updateAVGPrice() {
         double totalPrice = 0;
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        
         for (int row = 0; row < tableModel.getRowCount(); row++) {
-            double price = (double) tableModel.getValueAt(row, 1);
-            int count = (int) tableModel.getValueAt(row, 2);
-            totalPrice += price * count;
+            double price = (double) tableModel.getValueAt(row, 1);       
+            totalPrice += price;
         }
-        TotalPriceLabel.setText("Total: " + totalPrice + " tl");
+        
+        totalPrice = totalPrice/tableModel.getRowCount();
+        AverageLabel.setText("Total: " + totalPrice + " tl");
     }
     
+    private void removeSelectedRows() {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+
+        for (int row = tableModel.getRowCount() - 1; row >= 0; row--) {
+            Boolean isSelected = (Boolean) tableModel.getValueAt(row, 2);
+            if (isSelected != null && isSelected) {
+                String productName = (String) tableModel.getValueAt(row, 0);
+                removeProductFromDatabase(productName);
+                tableModel.removeRow(row);
+            }
+        }
+
+        updateAVGPrice();
+    }
+    
+    private void removeProductFromDatabase(String productName) {
+        String deleteSQL = "DELETE FROM public.canteen_product WHERE \"ProductName\" = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
+            pstmt.setString(1, productName);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Failed to delete product", ex);
+        }
+    }
+    
+    private void addRowToTable() {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+
+        // Get product name and price from text fields
+        String productName = ProductName.getText();
+        double price = Double.parseDouble(Price.getText());
+
+        // Add data to the table model
+        Object[] rowData = {productName, price, false};
+        tableModel.addRow(rowData);
+
+        addProductToDatabase(productName, price);
+
+        // Clear text fields
+        ProductName.setText("");
+        Price.setText("");
+    }
+    
+    private void addProductToDatabase(String productName, double price) {
+        String insertSQL = "INSERT INTO public.canteen_product(\"ProductName\", \"Price\") VALUES (?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+            pstmt.setString(1, productName);
+            pstmt.setDouble(2, price);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CanteenPurchaseFrame.class.getName()).log(Level.SEVERE, "Failed to add product", ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,9 +203,12 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         TopPanel = new javax.swing.JPanel();
+        AverageLabel = new javax.swing.JLabel();
         CenterPanel = new javax.swing.JPanel();
+        LeftPadding = new javax.swing.JPanel();
         TableScrollPane = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        RightPadding = new javax.swing.JPanel();
         BottomPanel = new javax.swing.JPanel();
         ProductName = new javax.swing.JTextField();
         Price = new javax.swing.JTextField();
@@ -152,9 +216,15 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         SubmitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Goods Management");
+
+        AverageLabel.setText("Average Price 0 tl");
+        TopPanel.add(AverageLabel);
+
         getContentPane().add(TopPanel, java.awt.BorderLayout.PAGE_START);
 
         CenterPanel.setLayout(new javax.swing.BoxLayout(CenterPanel, javax.swing.BoxLayout.LINE_AXIS));
+        CenterPanel.add(LeftPadding);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,10 +240,11 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         TableScrollPane.setViewportView(jTable1);
 
         CenterPanel.add(TableScrollPane);
+        CenterPanel.add(RightPadding);
 
         getContentPane().add(CenterPanel, java.awt.BorderLayout.CENTER);
 
-        BottomPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 10));
+        BottomPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
 
         ProductName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ProductName.setText("ProductName");
@@ -185,12 +256,22 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
         BottomPanel.add(filler1);
 
         SubmitButton.setText("Submit");
+        SubmitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SubmitButtonActionPerformed(evt);
+            }
+        });
         BottomPanel.add(SubmitButton);
 
         getContentPane().add(BottomPanel, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitButtonActionPerformed
+        removeSelectedRows();
+        addRowToTable();
+    }//GEN-LAST:event_SubmitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,10 +309,13 @@ public class CanteenGoodsManagementFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AverageLabel;
     private javax.swing.JPanel BottomPanel;
     private javax.swing.JPanel CenterPanel;
+    private javax.swing.JPanel LeftPadding;
     private javax.swing.JTextField Price;
     private javax.swing.JTextField ProductName;
+    private javax.swing.JPanel RightPadding;
     private javax.swing.JButton SubmitButton;
     private javax.swing.JScrollPane TableScrollPane;
     private javax.swing.JPanel TopPanel;

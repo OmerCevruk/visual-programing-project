@@ -39,7 +39,8 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         initializeDatabaseConnection();
         loadDataFromDatabase();
         populateTable();
-        TableScrollPane.setViewportView(table);                 
+        TableScrollPane.setViewportView(table);      
+        
     }
     
     private void initializeDatabaseConnection() {
@@ -172,8 +173,10 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         BoxPanel = new javax.swing.JPanel();
         TotalPriceLabel = new javax.swing.JLabel();
         CenterPanel = new javax.swing.JPanel();
+        LeftPadding = new javax.swing.JPanel();
         TableScrollPane = new javax.swing.JScrollPane();
         ItemTable = new javax.swing.JTable();
+        RightPadding = new javax.swing.JPanel();
         BottomPanel = new javax.swing.JPanel();
         StudentName = new javax.swing.JTextField();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 32767));
@@ -191,6 +194,7 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         getContentPane().add(TopPanel, java.awt.BorderLayout.PAGE_START);
 
         CenterPanel.setLayout(new javax.swing.BoxLayout(CenterPanel, javax.swing.BoxLayout.LINE_AXIS));
+        CenterPanel.add(LeftPadding);
 
         ItemTable.setAutoCreateColumnsFromModel(false);
         ItemTable.setAutoCreateRowSorter(true);
@@ -210,6 +214,7 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         TableScrollPane.setViewportView(ItemTable);
 
         CenterPanel.add(TableScrollPane);
+        CenterPanel.add(RightPadding);
 
         getContentPane().add(CenterPanel, java.awt.BorderLayout.CENTER);
 
@@ -335,6 +340,8 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private javax.swing.JPanel CenterPanel;
     private javax.swing.JButton ConfirmButton;
     private javax.swing.JTable ItemTable;
+    private javax.swing.JPanel LeftPadding;
+    private javax.swing.JPanel RightPadding;
     private javax.swing.JTextField StudentName;
     private javax.swing.JScrollPane TableScrollPane;
     private javax.swing.JPanel TopPanel;
