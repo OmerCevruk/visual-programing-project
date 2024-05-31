@@ -32,15 +32,15 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="StudentNameLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Canteen"/>
-          </Properties>
-        </Component>
         <Container class="javax.swing.JPanel" name="BoxPanel">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
         </Container>
+        <Component class="javax.swing.JLabel" name="TotalPriceLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Total:0 tl"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="CenterPanel">

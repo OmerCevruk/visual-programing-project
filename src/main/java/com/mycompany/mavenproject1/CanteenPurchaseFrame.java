@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.mavenproject1;
-import java.util.Calendar;
+
 import java.sql.CallableStatement;
 import java.util.List;
 import javafx.util.Pair;
@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -19,7 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
@@ -40,8 +40,8 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         loadDataFromDatabase();
         populateTable();
         jScrollPane1.setViewportView(table);
-//        this.ItemTable = this.table;
-//        this.ItemTable.repaint();
+        
+        
         
         
     }
@@ -84,6 +84,16 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
 
         table.setModel(tableModel);
         tableModel.fireTableDataChanged();
+        
+        tableModel.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
+                    updateTotalPrice();
+                }
+            }
+        });
+        
     }
     
      /**
@@ -94,12 +104,12 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
         int colCount = data.get(0).size();
         Object[][] tableData = new Object[rowCount][colCount];
 
-//        for (int i = 0; i < rowCount; i++) {
-//            for (int j = 0; j < colCount; j++) {
-//                tableData[i][j] = data.get(i).get(j);
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < colCount; j++) {
+                tableData[i][j] = data.get(i).get(j);
 //                System.out.println(tableData[i][j]);
-//            }
-//        }
+            }
+        }
 
         return tableData;
     }
@@ -123,7 +133,20 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
            public boolean isCellEditable(int row, int column) {
                return column == 2; // Make count column editable
            }
+           
+           
        };
+    }
+    
+    private void updateTotalPrice() {
+        double totalPrice = 0;
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        for (int row = 0; row < tableModel.getRowCount(); row++) {
+            double price = (double) tableModel.getValueAt(row, 1);
+            int count = (int) tableModel.getValueAt(row, 2);
+            totalPrice += price * count;
+        }
+        TotalPriceLabel.setText("Total: " + totalPrice + " tl");
     }
     
     private List<Pair<String, Integer>> getNameAndCountForEachRow() {
@@ -150,8 +173,8 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         TopPanel = new javax.swing.JPanel();
-        StudentNameLabel = new javax.swing.JLabel();
         BoxPanel = new javax.swing.JPanel();
+        TotalPriceLabel = new javax.swing.JLabel();
         CenterPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ItemTable = new javax.swing.JTable();
@@ -162,11 +185,11 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        StudentNameLabel.setText("Canteen");
-        TopPanel.add(StudentNameLabel);
-
         BoxPanel.setLayout(new javax.swing.BoxLayout(BoxPanel, javax.swing.BoxLayout.LINE_AXIS));
         TopPanel.add(BoxPanel);
+
+        TotalPriceLabel.setText("Total:0 tl");
+        TopPanel.add(TotalPriceLabel);
 
         getContentPane().add(TopPanel, java.awt.BorderLayout.PAGE_START);
 
@@ -316,8 +339,8 @@ public class CanteenPurchaseFrame extends javax.swing.JFrame {
     private javax.swing.JButton ConfirmButton;
     private javax.swing.JTable ItemTable;
     private javax.swing.JTextField StudentName;
-    private javax.swing.JLabel StudentNameLabel;
     private javax.swing.JPanel TopPanel;
+    private javax.swing.JLabel TotalPriceLabel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
