@@ -1,24 +1,21 @@
 package com.mycompany.mavenproject1;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 
 public class AttendanceFrame extends javax.swing.JFrame {
+    private int parentID;
     private JTable attendanceTable;
-    private JDBCPostgreSQLConnection dbConnection;
-    private Connection conn;
-    
-    public AttendanceFrame(int ChildID) {
-        dbConnection = new JDBCPostgreSQLConnection();
-        conn = dbConnection.connect();
+
+    public AttendanceFrame(int parentID) {
+        this.parentID = parentID;
         initComponents();
-        int childID = 0;
-        loadAttendanceData(childID);
+        loadAttendanceData();
     }
 
     
@@ -26,28 +23,50 @@ public class AttendanceFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Attendance Records"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void loadAttendanceData(int childID) {
-        try {
-            String sql = "SELECT \"Date\", \"Status\" FROM attendance WHERE \"ChildID\" = ?";
+    private void loadAttendanceData() {
+        try (Connection conn = new JDBCPostgreSQLConnection().connect()) {
+            String sql = "SELECT a.Date, a.Status " +
+                         "FROM attendance a " +
+                         "JOIN parent_child pc ON a.ChildID = pc.ChildID " +
+                         "WHERE pc.ParentID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, childID);
+            pstmt.setInt(1, parentID);
             ResultSet rs = pstmt.executeQuery();
 
             DefaultTableModel model = new DefaultTableModel(new String[]{"Date", "Status"}, 0);
@@ -57,17 +76,19 @@ public class AttendanceFrame extends javax.swing.JFrame {
                 model.addRow(new Object[]{date, status});
             }
             attendanceTable.setModel(model);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error loading attendance data.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        int childID = 6; // Replace with actual child ID
-        new AttendanceFrame(childID).setVisible(true);
+        java.awt.EventQueue.invokeLater(() -> {
+            new AttendanceFrame(1).setVisible(true); // Example parentID
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

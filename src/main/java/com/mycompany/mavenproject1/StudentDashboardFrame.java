@@ -8,36 +8,9 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     public StudentDashboardFrame(int childID, String fullName) {
         initComponents();
         welcomeLabel.setText("Welcome, " + fullName);
+
         
-
-        // Layout and add components
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        add(welcomeLabel);
-        add(viewClassesButton);
-        add(logoutButton);
         
-        // Button actions
-        viewClassesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                viewClasses();
-            }
-
-            private void viewClasses() {
-                throw new UnsupportedOperationException("Not supported yet."); 
-            }
-        });
-
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                logout();
-            }
-
-            private void logout() {
-                throw new UnsupportedOperationException("Not supported yet."); 
-            }
-        });
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
@@ -54,6 +27,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         userNameFiller = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 0));
         welcomeLabel = new javax.swing.JLabel();
         dashboardPanel = new javax.swing.JPanel();
+        canteenButton = new javax.swing.JToggleButton();
         viewClassesButton = new javax.swing.JToggleButton();
         logoutButton = new javax.swing.JToggleButton();
 
@@ -63,8 +37,22 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         headerPanel.add(userNameFiller);
         headerPanel.add(welcomeLabel);
 
+        canteenButton.setText("Make Purchase ");
+        canteenButton.setToolTipText("Directs to Parent add page");
+        canteenButton.setAutoscrolls(true);
+        canteenButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        canteenButton.setMaximumSize(new java.awt.Dimension(110, 110));
+        canteenButton.setMinimumSize(new java.awt.Dimension(110, 25));
+        canteenButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        canteenButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                canteenButtonActionPerformed(evt);
+            }
+        });
+        dashboardPanel.add(canteenButton);
+
         viewClassesButton.setText("View Classes");
-        viewClassesButton.setToolTipText("Directs to teacher add page");
+        viewClassesButton.setToolTipText("Directs to student add page");
         viewClassesButton.setAutoscrolls(true);
         viewClassesButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         viewClassesButton.setMaximumSize(new java.awt.Dimension(110, 110));
@@ -77,8 +65,8 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         });
         dashboardPanel.add(viewClassesButton);
 
-        logoutButton.setText("Log Out");
-        logoutButton.setToolTipText("Directs to Parent add page");
+        logoutButton.setText("Logout");
+        logoutButton.setToolTipText("Directs to teacher add page");
         logoutButton.setAutoscrolls(true);
         logoutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logoutButton.setMaximumSize(new java.awt.Dimension(110, 110));
@@ -95,13 +83,13 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 636, Short.MAX_VALUE)
+            .addGap(0, 870, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -109,23 +97,29 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
             .addGap(0, 336, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 131, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(dashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 130, Short.MAX_VALUE)))
+                    .addComponent(dashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_logoutButtonActionPerformed
+    private void canteenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canteenButtonActionPerformed
+        CanteenPurchaseFrame canteenFrame = new CanteenPurchaseFrame();
+        canteenFrame.setVisible(true);
+    }//GEN-LAST:event_canteenButtonActionPerformed
 
     private void viewClassesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewClassesButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_viewClassesButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+         // Close the student dashboard
+        dispose();
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
      public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -136,6 +130,7 @@ public class StudentDashboardFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton canteenButton;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JToggleButton logoutButton;

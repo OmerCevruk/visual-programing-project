@@ -81,7 +81,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JToggleButton" name="ViewAttendancesButton">
+            <Component class="javax.swing.JToggleButton" name="viewAttendanceButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="View Attendances"/>
                 <Property name="toolTipText" type="java.lang.String" value="Directs to Parent add page"/>
@@ -100,10 +100,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ViewAttendancesButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewAttendanceButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="LogoutButton">
+            <Component class="javax.swing.JToggleButton" name="logoutButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Logout"/>
                 <Property name="toolTipText" type="java.lang.String" value="Directs to teacher add page"/>
@@ -122,7 +122,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LogoutButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

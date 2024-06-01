@@ -1,8 +1,5 @@
 package com.mycompany.mavenproject1;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,16 +9,15 @@ import java.sql.SQLException;
  */
 public class ParentDashboardFrame extends javax.swing.JFrame {
 
-    private JButton viewAttendanceButton;
-    private JDBCPostgreSQLConnection dbConnection;
-    private Connection conn;
-    private int childID;
+    private final JDBCPostgreSQLConnection dbConnection;
+    private final Connection conn;
+
+    private int parentID;
     
     public ParentDashboardFrame(int parentID) {
         dbConnection = new JDBCPostgreSQLConnection();
         conn = dbConnection.connect();
-        initComponents();
-        loadChildData(parentID);
+        this.parentID = parentID;
         initComponents();
     }
 
@@ -35,8 +31,8 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
         userNameLabel = new javax.swing.JLabel();
         dashboardPanel = new javax.swing.JPanel();
         dashboardPanel1 = new javax.swing.JPanel();
-        ViewAttendancesButton = new javax.swing.JToggleButton();
-        LogoutButton = new javax.swing.JToggleButton();
+        viewAttendanceButton = new javax.swing.JToggleButton();
+        logoutButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,33 +42,33 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
         userNameLabel.setText("John Doe");
         headerPanel.add(userNameLabel);
 
-        ViewAttendancesButton.setText("View Attendances");
-        ViewAttendancesButton.setToolTipText("Directs to Parent add page");
-        ViewAttendancesButton.setAutoscrolls(true);
-        ViewAttendancesButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        ViewAttendancesButton.setMaximumSize(new java.awt.Dimension(110, 110));
-        ViewAttendancesButton.setMinimumSize(new java.awt.Dimension(110, 25));
-        ViewAttendancesButton.setPreferredSize(new java.awt.Dimension(170, 25));
-        ViewAttendancesButton.addActionListener(new java.awt.event.ActionListener() {
+        viewAttendanceButton.setText("View Attendances");
+        viewAttendanceButton.setToolTipText("Directs to Parent add page");
+        viewAttendanceButton.setAutoscrolls(true);
+        viewAttendanceButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        viewAttendanceButton.setMaximumSize(new java.awt.Dimension(110, 110));
+        viewAttendanceButton.setMinimumSize(new java.awt.Dimension(110, 25));
+        viewAttendanceButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        viewAttendanceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ViewAttendancesButtonActionPerformed(evt);
+                viewAttendanceButtonActionPerformed(evt);
             }
         });
-        dashboardPanel1.add(ViewAttendancesButton);
+        dashboardPanel1.add(viewAttendanceButton);
 
-        LogoutButton.setText("Logout");
-        LogoutButton.setToolTipText("Directs to teacher add page");
-        LogoutButton.setAutoscrolls(true);
-        LogoutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        LogoutButton.setMaximumSize(new java.awt.Dimension(110, 110));
-        LogoutButton.setMinimumSize(new java.awt.Dimension(110, 25));
-        LogoutButton.setPreferredSize(new java.awt.Dimension(170, 25));
-        LogoutButton.addActionListener(new java.awt.event.ActionListener() {
+        logoutButton.setText("Logout");
+        logoutButton.setToolTipText("Directs to teacher add page");
+        logoutButton.setAutoscrolls(true);
+        logoutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoutButton.setMaximumSize(new java.awt.Dimension(110, 110));
+        logoutButton.setMinimumSize(new java.awt.Dimension(110, 25));
+        logoutButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LogoutButtonActionPerformed(evt);
+                logoutButtonActionPerformed(evt);
             }
         });
-        dashboardPanel1.add(LogoutButton);
+        dashboardPanel1.add(logoutButton);
 
         dashboardPanel.add(dashboardPanel1);
 
@@ -104,44 +100,29 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ViewAttendancesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewAttendancesButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ViewAttendancesButtonActionPerformed
+    private void viewAttendanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAttendanceButtonActionPerformed
+        // Open the attendance frame
+        new AttendanceFrame(parentID).setVisible(true);
+    }//GEN-LAST:event_viewAttendanceButtonActionPerformed
 
-    private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LogoutButtonActionPerformed
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // Close the student dashboard
+        dispose();
+    }//GEN-LAST:event_logoutButtonActionPerformed
     
-     private void loadChildData(int parentID) {
-        try {
-            String sql = "SELECT \"ChildID\" FROM parent_child WHERE \"ParentID\" = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, parentID);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                childID = rs.getInt("ChildID");
-            } else {
-                JOptionPane.showMessageDialog(this, "No child found for this parent.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error loading child data.");
-        }
-    }
-  
     public static void main(String[] args) {
-        int parentID = 5; // Replace with actual parent ID from login
-        new ParentDashboardFrame(parentID).setVisible(true);
+        java.awt.EventQueue.invokeLater(() -> {
+            new ParentDashboardFrame(1).setVisible(true); // Example parentID
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton LogoutButton;
-    private javax.swing.JToggleButton ViewAttendancesButton;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel dashboardPanel1;
     private javax.swing.JPanel headerPanel;
+    private javax.swing.JToggleButton logoutButton;
     private javax.swing.Box.Filler userNameFiller;
     private javax.swing.JLabel userNameLabel;
+    private javax.swing.JToggleButton viewAttendanceButton;
     // End of variables declaration//GEN-END:variables
 }

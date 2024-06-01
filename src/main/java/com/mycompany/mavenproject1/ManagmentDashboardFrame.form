@@ -51,9 +51,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="userNameLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="John Doe"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>

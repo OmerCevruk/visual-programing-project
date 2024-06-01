@@ -35,8 +35,6 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
 
         headerPanel.setLayout(new javax.swing.BoxLayout(headerPanel, javax.swing.BoxLayout.LINE_AXIS));
         headerPanel.add(userNameFiller);
-
-        userNameLabel.setText("John Doe");
         headerPanel.add(userNameLabel);
 
         parentPanel.add(headerPanel, java.awt.BorderLayout.PAGE_START);
@@ -160,7 +158,8 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CanteenManageButtonActionPerformed
 
     private void LogoutButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButton1ActionPerformed
-        // TODO add your handling code here:
+         // Close the management dashboard
+        dispose();
     }//GEN-LAST:event_LogoutButton1ActionPerformed
 
     
