@@ -113,27 +113,29 @@ public class ParentLoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        String fullNameValue = FullName.getText();
-        String passwordValue = new String(Password.getPassword());
+         String fullNameValue = FullName.getText();
+         String passwordValue = new String(Password.getPassword());
 
-        try (Connection conn = connect.connect()) {
-            
-            String sql = "SELECT * FROM public.parent WHERE \"FullName\" = ? AND \"Password\" = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, fullNameValue);
-            pstmt.setString(2, passwordValue);
-            
-            ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next()){
-                JOptionPane.showMessageDialog(this, "Successfully logged in");
-            }else{
-                // Login failed
-                JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    try (Connection conn = connect.connect()) {
+        String sql = "SELECT \"ParentID\" FROM public.parent WHERE \"FullName\" = ? AND \"Password\" = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, fullNameValue);
+        pstmt.setString(2, passwordValue);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()){
+            int parentID = rs.getInt("ParentID");
+            JOptionPane.showMessageDialog(this, "Successfully logged in");
+            new ParentDashboardFrame(parentID).setVisible(true);
+            this.dispose(); // Close the login frame
+        } else {
+            // Login failed
+            JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_LoginActionPerformed
 
     private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed

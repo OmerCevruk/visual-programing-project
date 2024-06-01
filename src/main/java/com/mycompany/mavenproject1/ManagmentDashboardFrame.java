@@ -22,6 +22,10 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
         addParentButton = new javax.swing.JToggleButton();
         addStudentButton = new javax.swing.JToggleButton();
         addTeacherButton = new javax.swing.JToggleButton();
+        dashboardPanel1 = new javax.swing.JPanel();
+        RegisterClassButton = new javax.swing.JToggleButton();
+        CanteenManageButton = new javax.swing.JToggleButton();
+        LogoutButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard");
@@ -79,6 +83,50 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
         });
         dashboardPanel.add(addTeacherButton);
 
+        RegisterClassButton.setText("Register Class");
+        RegisterClassButton.setToolTipText("Directs to Parent add page");
+        RegisterClassButton.setAutoscrolls(true);
+        RegisterClassButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        RegisterClassButton.setMaximumSize(new java.awt.Dimension(110, 110));
+        RegisterClassButton.setMinimumSize(new java.awt.Dimension(110, 25));
+        RegisterClassButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        RegisterClassButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegisterClassButtonActionPerformed(evt);
+            }
+        });
+        dashboardPanel1.add(RegisterClassButton);
+
+        CanteenManageButton.setText("Manage Products");
+        CanteenManageButton.setToolTipText("Directs to teacher add page");
+        CanteenManageButton.setAutoscrolls(true);
+        CanteenManageButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        CanteenManageButton.setMaximumSize(new java.awt.Dimension(110, 110));
+        CanteenManageButton.setMinimumSize(new java.awt.Dimension(110, 25));
+        CanteenManageButton.setPreferredSize(new java.awt.Dimension(170, 25));
+        CanteenManageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CanteenManageButtonActionPerformed(evt);
+            }
+        });
+        dashboardPanel1.add(CanteenManageButton);
+
+        LogoutButton1.setText("Logout");
+        LogoutButton1.setToolTipText("Directs to teacher add page");
+        LogoutButton1.setAutoscrolls(true);
+        LogoutButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LogoutButton1.setMaximumSize(new java.awt.Dimension(110, 110));
+        LogoutButton1.setMinimumSize(new java.awt.Dimension(110, 25));
+        LogoutButton1.setPreferredSize(new java.awt.Dimension(170, 25));
+        LogoutButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutButton1ActionPerformed(evt);
+            }
+        });
+        dashboardPanel1.add(LogoutButton1);
+
+        dashboardPanel.add(dashboardPanel1);
+
         parentPanel.add(dashboardPanel, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(parentPanel);
@@ -87,16 +135,33 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addParentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addParentButtonActionPerformed
-        // TODO add your handling code here:
+        ParentAdderFrame parentFrame = new ParentAdderFrame();
+        parentFrame.setVisible(true);
     }//GEN-LAST:event_addParentButtonActionPerformed
 
     private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
-        // TODO add your handling code here:
+        StudentAdderFrame studentFrame = new StudentAdderFrame();
+        studentFrame.setVisible(true);
     }//GEN-LAST:event_addStudentButtonActionPerformed
 
     private void addTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeacherButtonActionPerformed
-        // TODO add your handling code here:
+        TeacherAdderFrame teacherFrame = new TeacherAdderFrame();
+        teacherFrame.setVisible(true);
     }//GEN-LAST:event_addTeacherButtonActionPerformed
+
+    private void RegisterClassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterClassButtonActionPerformed
+        ClassRegistrationFrame classFrame = new ClassRegistrationFrame();
+        classFrame.setVisible(true);
+    }//GEN-LAST:event_RegisterClassButtonActionPerformed
+
+    private void CanteenManageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CanteenManageButtonActionPerformed
+       CanteenGoodsManagementFrame canteenFrame = new CanteenGoodsManagementFrame();
+       canteenFrame.setVisible(true);
+    }//GEN-LAST:event_CanteenManageButtonActionPerformed
+
+    private void LogoutButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LogoutButton1ActionPerformed
 
     
     public static void main(String args[]) {
@@ -109,10 +174,14 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton CanteenManageButton;
+    private javax.swing.JToggleButton LogoutButton1;
+    private javax.swing.JToggleButton RegisterClassButton;
     private javax.swing.JToggleButton addParentButton;
     private javax.swing.JToggleButton addStudentButton;
     private javax.swing.JToggleButton addTeacherButton;
     private javax.swing.JPanel dashboardPanel;
+    private javax.swing.JPanel dashboardPanel1;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JPanel parentPanel;
     private javax.swing.Box.Filler userNameFiller;
