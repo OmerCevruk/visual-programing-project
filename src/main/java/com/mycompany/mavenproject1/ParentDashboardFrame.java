@@ -33,7 +33,7 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
         viewAttendanceButton = new javax.swing.JToggleButton();
         logoutButton = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Dashboard");
 
         headerPanel.setLayout(new javax.swing.BoxLayout(headerPanel, javax.swing.BoxLayout.LINE_AXIS));
