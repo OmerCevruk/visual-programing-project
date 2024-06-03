@@ -21,12 +21,12 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
         dashboardPanel = new javax.swing.JPanel();
         addStudentButton = new javax.swing.JToggleButton();
         CanteenManageButton = new javax.swing.JToggleButton();
-        LogoutButton1 = new javax.swing.JToggleButton();
         addTeacherButton = new javax.swing.JToggleButton();
         addParentButton = new javax.swing.JToggleButton();
         RegisterClassButton = new javax.swing.JToggleButton();
+        LogoutButton1 = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Dashboard");
         setPreferredSize(new java.awt.Dimension(416, 152));
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -66,20 +66,6 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
             }
         });
         dashboardPanel.add(CanteenManageButton);
-
-        LogoutButton1.setText("Logout");
-        LogoutButton1.setToolTipText("Directs to teacher add page");
-        LogoutButton1.setAutoscrolls(true);
-        LogoutButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        LogoutButton1.setMaximumSize(new java.awt.Dimension(110, 110));
-        LogoutButton1.setMinimumSize(new java.awt.Dimension(110, 25));
-        LogoutButton1.setPreferredSize(new java.awt.Dimension(170, 25));
-        LogoutButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LogoutButton1ActionPerformed(evt);
-            }
-        });
-        dashboardPanel.add(LogoutButton1);
 
         addTeacherButton.setText("Add Teacher");
         addTeacherButton.setToolTipText("Directs to teacher add page");
@@ -122,6 +108,20 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
             }
         });
         dashboardPanel.add(RegisterClassButton);
+
+        LogoutButton1.setText("Logout");
+        LogoutButton1.setToolTipText("Directs to teacher add page");
+        LogoutButton1.setAutoscrolls(true);
+        LogoutButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LogoutButton1.setMaximumSize(new java.awt.Dimension(110, 110));
+        LogoutButton1.setMinimumSize(new java.awt.Dimension(110, 25));
+        LogoutButton1.setPreferredSize(new java.awt.Dimension(170, 25));
+        LogoutButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutButton1ActionPerformed(evt);
+            }
+        });
+        dashboardPanel.add(LogoutButton1);
 
         parentPanel.add(dashboardPanel, java.awt.BorderLayout.CENTER);
 

@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCPostgreSQLConnection {
-    private final String url = "jdbc:postgresql://localhost/VisualDB2"; //name of your database name
+    private final String url = "jdbc:postgresql://localhost/VisualDB3"; //name of your database name
     private final String user = "postgres"; // user name of your postgre (default is postgres if havent changed)
     private final String password = "1234"; // password of your postgre
 

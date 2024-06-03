@@ -63,12 +63,17 @@ private void populateParentBox() {
         studentid = new javax.swing.JTextField();
         parentlabel = new javax.swing.JLabel();
         ParentBox = new javax.swing.JComboBox<>();
-        CityidLabel = new javax.swing.JLabel();
-        cityid = new javax.swing.JTextField();
+        CitynameLabel = new javax.swing.JLabel();
+        cityName = new javax.swing.JTextField();
         addStudentButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("dashboard");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Student Adder");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         rootPanel.setLayout(new java.awt.BorderLayout());
 
@@ -156,11 +161,11 @@ private void populateParentBox() {
         });
         studentDataPanel.add(ParentBox);
 
-        CityidLabel.setText("City ID");
-        studentDataPanel.add(CityidLabel);
+        CitynameLabel.setText("City Name");
+        studentDataPanel.add(CitynameLabel);
 
-        cityid.setText("enter city id");
-        studentDataPanel.add(cityid);
+        cityName.setText("enter city name (start with capital)");
+        studentDataPanel.add(cityName);
 
         rootPanel.add(studentDataPanel, java.awt.BorderLayout.CENTER);
 
@@ -183,7 +188,7 @@ private void populateParentBox() {
             .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        pack();
+        setBounds(0, 0, 634, 346);
     }// </editor-fold>//GEN-END:initComponents
 
     private void studentClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentClassActionPerformed
@@ -200,16 +205,15 @@ private void populateParentBox() {
 
     private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
          String fullNameValue = Fullname.getText();
-        String passwordValue = jTextField2.getText();
-        String emailValue = email.getText();
-        String schoolClassValue = studentClass.getText();
-        String dobValue = DOBField.getText();
-        String addressValue = Adress.getText();
-        int childIDValue = Integer.parseInt(studentid.getText()); 
-        String parentValue = (String) ParentBox.getSelectedItem();
-        int cityIDValue = Integer.parseInt(cityid.getText());
-
-        
+    String passwordValue = jTextField2.getText();
+    String emailValue = email.getText();
+    String schoolClassValue = studentClass.getText();
+    String dobValue = DOBField.getText();
+    String addressValue = Adress.getText();
+    int childIDValue = Integer.parseInt(studentid.getText()); 
+    String parentValue = (String) ParentBox.getSelectedItem();
+    String cityNameValue = cityName.getText(); 
+    
     // Date conversion
     java.sql.Date sqlDate = null;
     try {
@@ -220,25 +224,45 @@ private void populateParentBox() {
         JOptionPane.showMessageDialog(this, "Error parsing date: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
+    
+    // Fetch CityID using CityName
+    int cityIDValue = 0;
+    try (Connection conn = connect.connect()) {
+        String fetchCityIDSql = "SELECT \"CityID\" FROM public.turkish_cities WHERE \"CityName\" = ?";
+        PreparedStatement fetchCityIDStmt = conn.prepareStatement(fetchCityIDSql);
+        fetchCityIDStmt.setString(1, cityNameValue);
+        ResultSet rs = fetchCityIDStmt.executeQuery();
         
-        try (Connection conn = connect.connect()) {
-            String sql = "INSERT INTO public.child(\"FullName\", \"Password\", \"Email\", \"SchoolClass\", \"DOB\", \"Address\", \"ChildID\", \"parent\" , \"CityID\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, fullNameValue);
-            pstmt.setString(2, passwordValue);
-            pstmt.setString(3, emailValue);
-            pstmt.setString(4, schoolClassValue);
-            pstmt.setDate(5, sqlDate);
-            pstmt.setString(6, addressValue);
-            pstmt.setInt(7, childIDValue); 
-            pstmt.setString(8, parentValue);
-            pstmt.setInt(9, cityIDValue);
-            pstmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(this, "Student added to system successfully");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        if (rs.next()) {
+            cityIDValue = rs.getInt("CityID");
+        } else {
+            JOptionPane.showMessageDialog(this, "City not found: " + cityNameValue, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error fetching city ID: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Insert student data into child table
+    try (Connection conn = connect.connect()) {
+        String sql = "INSERT INTO public.child(\"FullName\", \"Password\", \"Email\", \"SchoolClass\", \"DOB\", \"Address\", \"ChildID\", \"parent\", \"CityID\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, fullNameValue);
+        pstmt.setString(2, passwordValue);
+        pstmt.setString(3, emailValue);
+        pstmt.setString(4, schoolClassValue);
+        pstmt.setDate(5, sqlDate);
+        pstmt.setString(6, addressValue);
+        pstmt.setInt(7, childIDValue); 
+        pstmt.setString(8, parentValue);
+        pstmt.setInt(9, cityIDValue);
+        pstmt.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Student added to system successfully");
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_addStudentButtonActionPerformed
 
     private void ParentBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ParentBoxActionPerformed
@@ -252,6 +276,10 @@ private void populateParentBox() {
     private void studentidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentidActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studentidActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
 
     
     public static void main(String args[]) {
@@ -267,7 +295,7 @@ private void populateParentBox() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Adress;
     private javax.swing.JLabel AdressLabel;
-    private javax.swing.JLabel CityidLabel;
+    private javax.swing.JLabel CitynameLabel;
     private javax.swing.JLabel ClassLabel;
     private javax.swing.JTextField DOBField;
     private javax.swing.JLabel DOBLabel;
@@ -276,7 +304,7 @@ private void populateParentBox() {
     private javax.swing.JComboBox<String> ParentBox;
     private javax.swing.JLabel StudentIDLabel;
     private javax.swing.JButton addStudentButton;
-    private javax.swing.JTextField cityid;
+    private javax.swing.JTextField cityName;
     private javax.swing.JTextField email;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JTextField jTextField2;

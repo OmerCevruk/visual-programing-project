@@ -44,11 +44,11 @@ public class TeacherAdderFrame extends javax.swing.JFrame {
         DOBField = new javax.swing.JTextField();
         AdressLabel = new javax.swing.JLabel();
         Adress = new javax.swing.JTextField();
-        CityidLabel = new javax.swing.JLabel();
-        cityid = new javax.swing.JTextField();
+        CitynameLabel = new javax.swing.JLabel();
+        cityName = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Teacher registeration");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Teacher Adder");
 
         addTeacherButton.setText("Add Teacher");
         addTeacherButton.addActionListener(new java.awt.event.ActionListener() {
@@ -107,11 +107,11 @@ public class TeacherAdderFrame extends javax.swing.JFrame {
         });
         studentDataPanel.add(Adress);
 
-        CityidLabel.setText("City ID");
-        studentDataPanel.add(CityidLabel);
+        CitynameLabel.setText("City Name");
+        studentDataPanel.add(CitynameLabel);
 
-        cityid.setText("enter city id");
-        studentDataPanel.add(cityid);
+        cityName.setText("enter city name (start with capital)");
+        studentDataPanel.add(cityName);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,40 +148,53 @@ public class TeacherAdderFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeacherButtonActionPerformed
-        String fullNameValue = Fullname.getText();
-        String emailValue = email.getText();
-        String passwordValue = PasswordField.getText();
-        String dobValue = DOBField.getText();
-        String addressValue = Adress.getText();
-        int cityIDValue = Integer.parseInt(cityid.getText());
-        
+    String fullNameValue = Fullname.getText();
+    String emailValue = email.getText();
+    String passwordValue = PasswordField.getText();
+    String dobValue = DOBField.getText();
+    String addressValue = Adress.getText();
+    String cityNameValue = cityName.getText(); 
 
-        // Date conversion
-        java.sql.Date sqlDate = null;
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedDate = format.parse(dobValue);
-            sqlDate = new java.sql.Date(parsedDate.getTime());
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Error parsing date: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    // Date conversion
+    java.sql.Date sqlDate = null;
+    try {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date parsedDate = format.parse(dobValue);
+        sqlDate = new java.sql.Date(parsedDate.getTime());
+    } catch (ParseException e) {
+        JOptionPane.showMessageDialog(this, "Error parsing date: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int cityIDValue = 0;
+    try (Connection conn = connect.connect()) {
+        // First, get the city ID from the city name
+        String citySql = "SELECT \"CityID\" FROM public.turkish_cities WHERE \"CityName\" = ?";
+        PreparedStatement cityStmt = conn.prepareStatement(citySql);
+        cityStmt.setString(1, cityNameValue);
+        ResultSet cityRs = cityStmt.executeQuery();
+        if (cityRs.next()) {
+            cityIDValue = cityRs.getInt("CityID");
+        } else {
+            JOptionPane.showMessageDialog(this, "City not found", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        try (Connection conn = connect.connect()) {
-            String sql = "INSERT INTO public.teacher(\"FullName\", \"Email\", \"Password\", \"DOB\", \"Address\", \"CityID\" ) VALUES (?, ?, ?, ?, ?, ? )";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, fullNameValue);
-            pstmt.setString(2, emailValue);
-            pstmt.setString(3, passwordValue);
-            pstmt.setDate(4, sqlDate);
-            pstmt.setString(5, addressValue);
-            pstmt.setInt(6, cityIDValue);
-            pstmt.executeUpdate();
+        // Then, insert the teacher data
+        String sql = "INSERT INTO public.teacher(\"FullName\", \"Email\", \"Password\", \"DOB\", \"Address\", \"CityID\") VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, fullNameValue);
+        pstmt.setString(2, emailValue);
+        pstmt.setString(3, passwordValue);
+        pstmt.setDate(4, sqlDate);
+        pstmt.setString(5, addressValue);
+        pstmt.setInt(6, cityIDValue);
+        pstmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Teacher added to system successfully");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        JOptionPane.showMessageDialog(this, "Teacher added to system successfully");
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_addTeacherButtonActionPerformed
 
     private void FullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullnameActionPerformed
@@ -234,14 +247,14 @@ public class TeacherAdderFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Adress;
     private javax.swing.JLabel AdressLabel;
-    private javax.swing.JLabel CityidLabel;
+    private javax.swing.JLabel CitynameLabel;
     private javax.swing.JTextField DOBField;
     private javax.swing.JLabel DOBLabel;
     private javax.swing.JLabel EmailLabel;
     private javax.swing.JTextField Fullname;
     private javax.swing.JTextField PasswordField;
     private javax.swing.JButton addTeacherButton;
-    private javax.swing.JTextField cityid;
+    private javax.swing.JTextField cityName;
     private javax.swing.JTextField email;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JLabel nameLabel;
