@@ -26,7 +26,7 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
         RegisterClassButton = new javax.swing.JToggleButton();
         LogoutButton1 = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dashboard");
         setPreferredSize(new java.awt.Dimension(416, 152));
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -157,8 +157,19 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CanteenManageButtonActionPerformed
 
     private void LogoutButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButton1ActionPerformed
-         // Close the management dashboard
-        dispose();
+         // Reset ManagerAuth state
+    ManagerAuth managerAuth = new ManagerAuth();
+    managerAuth.logout();
+    
+    // Close the management dashboard
+    dispose();
+
+    // Show the login screen 
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new ManagementLoginFrame().setVisible(true);
+        }
+    });
     }//GEN-LAST:event_LogoutButton1ActionPerformed
 
     

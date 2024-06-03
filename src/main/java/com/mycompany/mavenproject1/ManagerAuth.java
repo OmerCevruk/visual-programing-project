@@ -1,4 +1,5 @@
 package com.mycompany.mavenproject1;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class ManagerAuth {
     Connection conn = new JDBCPostgreSQLConnection().connect();
     PreparedStatement pstmt;
     public static boolean authenticated = false;
-    public static String  UserName = "John Doe";
+    public static String UserName = "John Doe";
 
     public ManagerAuth() {
         try {
@@ -23,21 +24,27 @@ public class ManagerAuth {
             Logger.getLogger(ManagerAuth.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public boolean authenticate(String username, String password) throws SQLException {
-        if(!authenticated){
+        if (!authenticated) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
 
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                this.authenticated = true;
-                this.UserName = username;
+                authenticated = true;
+                UserName = username;
                 return true;
             }
-        }else{
+        } else {
             return true;
         }
         return false;
-    } 
+    }
+
+    public void logout() {
+        authenticated = false;
+        UserName = "John Doe";
+    }
 }

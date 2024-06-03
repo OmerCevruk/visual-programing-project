@@ -1,4 +1,5 @@
 package com.mycompany.mavenproject1;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class ParentAuth {
     Connection conn = new JDBCPostgreSQLConnection().connect();
     PreparedStatement pstmt;
     public static boolean authenticated = false;
-    public static String  userName = "John Doe";
+    public static String userName = "John Doe";
     public static int parentId = 0;
 
     public ParentAuth() {
@@ -24,21 +25,29 @@ public class ParentAuth {
             Logger.getLogger(ParentAuth.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public boolean authenticate(String username, String password) throws SQLException {
-        if(!authenticated){
+        if (!authenticated) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
 
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                this.authenticated = true;
-                this.userName = username;
+                authenticated = true;
+                userName = username;
+                parentId = rs.getInt("ParentID"); 
                 return true;
             }
-        }else{
+        } else {
             return true;
         }
         return false;
-    } 
+    }
+
+    public void logout() {
+        authenticated = false;
+        userName = "John Doe";
+        parentId = 0;
+    }
 }

@@ -34,7 +34,7 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
         viewAttendanceButton = new javax.swing.JToggleButton();
         logoutButton = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dashboard");
 
         headerPanel.setLayout(new javax.swing.BoxLayout(headerPanel, javax.swing.BoxLayout.LINE_AXIS));
@@ -105,8 +105,19 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_viewAttendanceButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        // Close the student dashboard
+       // Reset ParentAuth state
+        ParentAuth parentAuth = new ParentAuth();
+        parentAuth.logout();
+    
+        // Close the parent dashboard
         dispose();
+
+        // Show the login screen
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ParentLoginFrame().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_logoutButtonActionPerformed
     
     public static void main(String[] args) {
