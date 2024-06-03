@@ -43,8 +43,8 @@ public class ParentAdderFrame extends javax.swing.JFrame {
         cityid = new javax.swing.JTextField();
         addParentButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Parent registeration");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Parent Adder");
 
         headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         headerLabel.setText("Add a parent");

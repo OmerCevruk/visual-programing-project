@@ -67,8 +67,13 @@ private void populateParentBox() {
         cityid = new javax.swing.JTextField();
         addStudentButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("dashboard");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Student Adder");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         rootPanel.setLayout(new java.awt.BorderLayout());
 
@@ -183,7 +188,7 @@ private void populateParentBox() {
             .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        pack();
+        setBounds(0, 0, 634, 346);
     }// </editor-fold>//GEN-END:initComponents
 
     private void studentClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentClassActionPerformed
@@ -252,6 +257,10 @@ private void populateParentBox() {
     private void studentidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentidActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studentidActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
 
     
     public static void main(String args[]) {

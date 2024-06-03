@@ -30,8 +30,8 @@ public class ClassRegistrationFrame extends javax.swing.JFrame {
         teacherIDTextField = new javax.swing.JTextField();
         clearButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Class registeratiration");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Class Registration");
 
         registerClassButton.setText("Register Class");
         registerClassButton.addActionListener(new java.awt.event.ActionListener() {

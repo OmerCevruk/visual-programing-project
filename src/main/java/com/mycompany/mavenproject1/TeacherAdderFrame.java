@@ -47,8 +47,8 @@ public class TeacherAdderFrame extends javax.swing.JFrame {
         CityidLabel = new javax.swing.JLabel();
         cityid = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Teacher registeration");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Teacher Adder");
 
         addTeacherButton.setText("Add Teacher");
         addTeacherButton.addActionListener(new java.awt.event.ActionListener() {
