@@ -22,6 +22,7 @@ com\mycompany\mavenproject1\StudentLoginFrame$3.class
 com\mycompany\mavenproject1\CanteenPurchaseFrame$4.class
 com\mycompany\mavenproject1\ManagementLoginFrame$1.class
 com\mycompany\mavenproject1\ParentAdderFrame$5.class
+com\mycompany\mavenproject1\AttendanceFrame$1.class
 com\mycompany\mavenproject1\ManagmentDashboardFrame$4.class
 com\mycompany\mavenproject1\TeacherAdderFrame$2.class
 com\mycompany\mavenproject1\TeacherAdderFrame.class
@@ -59,6 +60,7 @@ com\mycompany\mavenproject1\StudentLoginFrame$1.class
 com\mycompany\mavenproject1\StudentDashboardFrame$1.class
 com\mycompany\mavenproject1\ParentAdderFrame$1.class
 com\mycompany\mavenproject1\Mavenproject1$1.class
+attendanceTable.class
 com\mycompany\mavenproject1\ParentLoginFrame$2.class
 com\mycompany\mavenproject1\ManagmentDashboardFrame$5.class
 com\mycompany\mavenproject1\ClassRegistrationFrame$1.class
