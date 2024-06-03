@@ -204,14 +204,14 @@ private void populateParentBox() {
     }//GEN-LAST:event_AdressActionPerformed
 
     private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
-         String fullNameValue = Fullname.getText();
+    String fullNameValue = Fullname.getText();
     String passwordValue = jTextField2.getText();
     String emailValue = email.getText();
     String schoolClassValue = studentClass.getText();
     String dobValue = DOBField.getText();
     String addressValue = Adress.getText();
     int childIDValue = Integer.parseInt(studentid.getText()); 
-    String parentValue = (String) ParentBox.getSelectedItem();
+    String parentNameValue = (String) ParentBox.getSelectedItem();
     String cityNameValue = cityName.getText(); 
     
     // Date conversion
@@ -243,6 +243,25 @@ private void populateParentBox() {
         JOptionPane.showMessageDialog(this, "Error fetching city ID: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
+
+    // Fetch ParentID using ParentName
+    int parentIDValue = 0;
+    try (Connection conn = connect.connect()) {
+        String fetchParentIDSql = "SELECT \"ParentID\" FROM public.parent WHERE \"FullName\" = ?";
+        PreparedStatement fetchParentIDStmt = conn.prepareStatement(fetchParentIDSql);
+        fetchParentIDStmt.setString(1, parentNameValue);
+        ResultSet rs = fetchParentIDStmt.executeQuery();
+        
+        if (rs.next()) {
+            parentIDValue = rs.getInt("ParentID");
+        } else {
+            JOptionPane.showMessageDialog(this, "Parent not found: " + parentNameValue, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error fetching parent ID: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
     
     // Insert student data into child table
     try (Connection conn = connect.connect()) {
@@ -255,11 +274,20 @@ private void populateParentBox() {
         pstmt.setDate(5, sqlDate);
         pstmt.setString(6, addressValue);
         pstmt.setInt(7, childIDValue); 
-        pstmt.setString(8, parentValue);
+        pstmt.setString(8, parentNameValue);
         pstmt.setInt(9, cityIDValue);
         pstmt.executeUpdate();
 
         JOptionPane.showMessageDialog(this, "Student added to system successfully");
+
+        // Insert parent-child relationship into parent_child table
+        String insertParentChildSql = "INSERT INTO public.parent_child(\"ParentID\", \"ChildID\") VALUES (?, ?)";
+        PreparedStatement insertParentChildStmt = conn.prepareStatement(insertParentChildSql);
+        insertParentChildStmt.setInt(1, parentIDValue);
+        insertParentChildStmt.setInt(2, childIDValue);
+        insertParentChildStmt.executeUpdate();
+        
+        
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
