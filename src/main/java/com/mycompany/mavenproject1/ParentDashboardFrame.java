@@ -14,11 +14,12 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
 
     private int parentID;
     
-    public ParentDashboardFrame(int parentID) {
+    public ParentDashboardFrame() {
         dbConnection = new JDBCPostgreSQLConnection();
         conn = dbConnection.connect();
-        this.parentID = parentID;
+        this.parentID = ParentAuth.parentId;
         initComponents();
+        this.userNameLabel.setText(ParentAuth.userName);
     }
 
     
@@ -76,23 +77,23 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 870, Short.MAX_VALUE)
+            .addGap(0, 280, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, 0)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
-                        .addComponent(dashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                        .addComponent(dashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
                     .addGap(0, 0, 0)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 282, Short.MAX_VALUE)
+            .addGap(0, 405, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(dashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)))
+                    .addComponent(dashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)))
         );
 
         pack();
@@ -110,7 +111,7 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
     
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
-            new ParentDashboardFrame(1).setVisible(true); // Example parentID
+            new ParentDashboardFrame().setVisible(true); // Example parentID
         });
     }
 

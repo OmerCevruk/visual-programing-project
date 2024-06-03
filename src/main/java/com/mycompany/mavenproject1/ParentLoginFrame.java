@@ -16,6 +16,7 @@ public class ParentLoginFrame extends javax.swing.JFrame {
         connect = new JDBCPostgreSQLConnection();
     }
 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,13 +123,16 @@ public class ParentLoginFrame extends javax.swing.JFrame {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, fullNameValue);
         pstmt.setString(2, passwordValue);
-
         ResultSet rs = pstmt.executeQuery();
-
+        
         if (rs.next()){
             int parentID = rs.getInt("ParentID");
+            String parentName = fullNameValue.trim();
+            ParentAuth.userName = parentName;
+            ParentAuth.parentId = parentID;
+
             JOptionPane.showMessageDialog(this, "Successfully logged in");
-            new ParentDashboardFrame(parentID).setVisible(true);
+            new ParentDashboardFrame().setVisible(true);
             this.dispose(); // Close the login frame
         } else {
             // Login failed

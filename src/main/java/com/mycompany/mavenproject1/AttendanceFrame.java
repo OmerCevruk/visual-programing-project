@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class AttendanceFrame extends javax.swing.JFrame {
     private int parentID;
-
+    private String parentName;
  
     private Connection conn;
 
@@ -20,10 +20,13 @@ public class AttendanceFrame extends javax.swing.JFrame {
 
     public AttendanceFrame(int parentID) {
         this.parentID = parentID;
+        this.parentID = ParentAuth.parentId;
+        this.parentName = ParentAuth.userName;
         initComponents();
         initializeDatabaseConnection();
         loadDataFromDatabase();
         populateTable();
+        
     }
 
     private void initializeDatabaseConnection() {
@@ -70,17 +73,19 @@ public class AttendanceFrame extends javax.swing.JFrame {
 private void loadDataFromDatabase() {
         data = new Vector<>();
         try (PreparedStatement pstmt = conn.prepareStatement(
-                "SELECT a.Date, a.Status " +
-                "FROM attendance a " +
-                "JOIN parent_child pc ON a.ChildID = pc.ChildID " +
-                "WHERE pc.ParentID = ?")) {
+            "SELECT a.\"Date\", a.\"Status\" " +
+            "FROM attendance a " +
+            "JOIN parent_child pc ON a.\"ChildID\" = pc.\"ChildID\" " +
+            "WHERE pc.\"ParentID\" = ?")) {
+            System.out.println(parentID);
+            System.out.println(parentName);
             pstmt.setInt(1, parentID);
             ResultSet rs = pstmt.executeQuery();
-
             while (rs.next()) {
                 Vector<Object> row = new Vector<>();
                 row.add(rs.getString("Date"));
                 row.add(rs.getString("Status"));
+                System.out.println(row+"aaaaaaaa"+parentID+parentName);
                 data.add(row);
             }
         } catch (SQLException ex) {
