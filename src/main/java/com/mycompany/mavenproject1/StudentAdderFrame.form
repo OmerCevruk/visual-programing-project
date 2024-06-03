@@ -177,14 +177,14 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="CityidLabel">
+            <Component class="javax.swing.JLabel" name="CitynameLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="City ID"/>
+                <Property name="text" type="java.lang.String" value="City Name"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="cityid">
+            <Component class="javax.swing.JTextField" name="cityName">
               <Properties>
-                <Property name="text" type="java.lang.String" value="enter city id"/>
+                <Property name="text" type="java.lang.String" value="enter city name (start with capital)"/>
               </Properties>
             </Component>
           </SubComponents>

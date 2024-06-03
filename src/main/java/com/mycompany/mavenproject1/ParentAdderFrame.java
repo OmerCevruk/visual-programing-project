@@ -39,8 +39,8 @@ public class ParentAdderFrame extends javax.swing.JFrame {
         DOBField = new javax.swing.JTextField();
         AdressLabel = new javax.swing.JLabel();
         Adress = new javax.swing.JTextField();
-        CityidLabel = new javax.swing.JLabel();
-        cityid = new javax.swing.JTextField();
+        CitynameLabel = new javax.swing.JLabel();
+        cityName = new javax.swing.JTextField();
         addParentButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -96,11 +96,11 @@ public class ParentAdderFrame extends javax.swing.JFrame {
         });
         studentDataPanel.add(Adress);
 
-        CityidLabel.setText("City ID");
-        studentDataPanel.add(CityidLabel);
+        CitynameLabel.setText("City Name");
+        studentDataPanel.add(CitynameLabel);
 
-        cityid.setText("enter city id");
-        studentDataPanel.add(cityid);
+        cityName.setText("enter city name (start with capital)");
+        studentDataPanel.add(cityName);
 
         addParentButton.setText("Add Parent");
         addParentButton.addActionListener(new java.awt.event.ActionListener() {
@@ -153,69 +153,57 @@ public class ParentAdderFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_AdressActionPerformed
 
     private void addParentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addParentButtonActionPerformed
-        String fullNameValue = Fullname.getText();
-        String emailValue = email.getText();
-        String passwordValue = PasswordField.getText();             
-        String dobValue = DOBField.getText();
-        String addressValue = Adress.getText();
-        int cityIDValue = Integer.parseInt(cityid.getText());
+         String fullNameValue = Fullname.getText();
+    String emailValue = email.getText();
+    String passwordValue = PasswordField.getText();
+    String dobValue = DOBField.getText();
+    String addressValue = Adress.getText();
+    String cityNameValue = cityName.getText(); 
 
-        // Date conversion
-        java.sql.Date sqlDate = null;
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedDate = format.parse(dobValue);
-            sqlDate = new java.sql.Date(parsedDate.getTime());
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Error parsing date: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    // Date conversion
+    java.sql.Date sqlDate = null;
+    try {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date parsedDate = format.parse(dobValue);
+        sqlDate = new java.sql.Date(parsedDate.getTime());
+    } catch (ParseException e) {
+        JOptionPane.showMessageDialog(this, "Error parsing date: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int cityIDValue = 0;
+    try (Connection conn = connect.connect()) {
+        // First, get the city ID from the city name
+        String citySql = "SELECT \"CityID\" FROM public.turkish_cities WHERE \"CityName\" = ?";
+        PreparedStatement cityStmt = conn.prepareStatement(citySql);
+        cityStmt.setString(1, cityNameValue);
+        ResultSet cityRs = cityStmt.executeQuery();
+        if (cityRs.next()) {
+            cityIDValue = cityRs.getInt("CityID");
+        } else {
+            JOptionPane.showMessageDialog(this, "City not found", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        try (Connection conn = connect.connect()) {
-            String sql = "INSERT INTO public.parent(\"FullName\", \"Email\", \"Password\", \"DOB\", \"Address\", \"CityID\" ) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, fullNameValue);
-            pstmt.setString(2, emailValue);
-            pstmt.setString(3, passwordValue);
-            pstmt.setDate(4, sqlDate);
-            pstmt.setString(5, addressValue);
-            pstmt.setInt(6, cityIDValue);
-            pstmt.executeUpdate();
+        // Then, insert the parent data
+        String sql = "INSERT INTO public.parent(\"FullName\", \"Email\", \"Password\", \"DOB\", \"Address\", \"CityID\") VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, fullNameValue);
+        pstmt.setString(2, emailValue);
+        pstmt.setString(3, passwordValue);
+        pstmt.setDate(4, sqlDate);
+        pstmt.setString(5, addressValue);
+        pstmt.setInt(6, cityIDValue);
+        pstmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Parent added to system successfully");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        JOptionPane.showMessageDialog(this, "Parent added to system successfully");
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_addParentButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ParentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ParentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ParentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ParentAdderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ParentAdderFrame().setVisible(true);
@@ -226,14 +214,14 @@ public class ParentAdderFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Adress;
     private javax.swing.JLabel AdressLabel;
-    private javax.swing.JLabel CityidLabel;
+    private javax.swing.JLabel CitynameLabel;
     private javax.swing.JTextField DOBField;
     private javax.swing.JLabel DOBLabel;
     private javax.swing.JLabel EmailLabel;
     private javax.swing.JTextField Fullname;
     private javax.swing.JTextField PasswordField;
     private javax.swing.JButton addParentButton;
-    private javax.swing.JTextField cityid;
+    private javax.swing.JTextField cityName;
     private javax.swing.JTextField email;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JLabel nameLabel;
