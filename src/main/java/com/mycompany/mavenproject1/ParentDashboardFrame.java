@@ -30,7 +30,6 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
         userNameFiller = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(10, 0));
         userNameLabel = new javax.swing.JLabel();
         dashboardPanel = new javax.swing.JPanel();
-        dashboardPanel1 = new javax.swing.JPanel();
         viewAttendanceButton = new javax.swing.JToggleButton();
         logoutButton = new javax.swing.JToggleButton();
 
@@ -41,6 +40,8 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
 
         userNameLabel.setText("John Doe");
         headerPanel.add(userNameLabel);
+
+        dashboardPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
 
         viewAttendanceButton.setText("View Attendances");
         viewAttendanceButton.setToolTipText("Directs to Parent add page");
@@ -54,7 +55,7 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
                 viewAttendanceButtonActionPerformed(evt);
             }
         });
-        dashboardPanel1.add(viewAttendanceButton);
+        dashboardPanel.add(viewAttendanceButton);
 
         logoutButton.setText("Logout");
         logoutButton.setToolTipText("Directs to teacher add page");
@@ -68,9 +69,7 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
                 logoutButtonActionPerformed(evt);
             }
         });
-        dashboardPanel1.add(logoutButton);
-
-        dashboardPanel.add(dashboardPanel1);
+        dashboardPanel.add(logoutButton);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,22 +78,20 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
             .addGap(0, 870, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 0, 0)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+                        .addComponent(dashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(0, 0, 0)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
+            .addGap(0, 282, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 105, Short.MAX_VALUE)
-                    .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(dashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 106, Short.MAX_VALUE)))
+                    .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(dashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)))
         );
 
         pack();
@@ -118,7 +115,6 @@ public class ParentDashboardFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel dashboardPanel;
-    private javax.swing.JPanel dashboardPanel1;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JToggleButton logoutButton;
     private javax.swing.Box.Filler userNameFiller;
