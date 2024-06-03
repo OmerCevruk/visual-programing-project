@@ -26,7 +26,7 @@ public class ManagmentDashboardFrame extends javax.swing.JFrame {
         addParentButton = new javax.swing.JToggleButton();
         RegisterClassButton = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Dashboard");
         setPreferredSize(new java.awt.Dimension(416, 152));
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
