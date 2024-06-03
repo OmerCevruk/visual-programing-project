@@ -41,6 +41,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
         attendanceTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Attendance");
 
         attendanceTable.setModel(new DefaultTableModel(
             new Object [][] {},

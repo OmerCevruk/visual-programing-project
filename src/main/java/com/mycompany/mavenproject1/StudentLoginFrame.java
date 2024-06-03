@@ -29,6 +29,7 @@ public class StudentLoginFrame extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
 
         StudentLoginLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
         StudentLoginLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

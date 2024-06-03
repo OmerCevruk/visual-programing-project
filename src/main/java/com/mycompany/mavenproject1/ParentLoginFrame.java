@@ -29,6 +29,7 @@ public class ParentLoginFrame extends javax.swing.JFrame {
         FullName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
 
         Login.setText("Log in");
         Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

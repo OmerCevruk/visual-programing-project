@@ -68,6 +68,7 @@ private void populateParentBox() {
         addStudentButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("dashboard");
 
         rootPanel.setLayout(new java.awt.BorderLayout());
 
